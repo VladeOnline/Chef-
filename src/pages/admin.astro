@@ -1,0 +1,369 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin de Galeria | Private Chef Costa Rica</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen bg-cream font-sans text-ink antialiased">
+    <header class="border-b border-black/10 bg-white">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <a href="/" class="text-sm font-extrabold text-forest">Private Chef Costa Rica</a>
+        <button
+          class="hidden rounded-lg border border-black/10 bg-white px-4 py-2 text-sm font-bold text-ink hover:border-forest hover:text-forest"
+          type="button"
+          data-logout
+        >
+          Cerrar sesion
+        </button>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <section class="max-w-3xl">
+        <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay">Admin</p>
+        <h1 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl">Publicar fotos de cocina</h1>
+        <p class="mt-4 text-lg leading-8 text-ink/70">
+          Sube fotos aqui y apareceran automaticamente en la galeria publica de la pagina.
+        </p>
+      </section>
+
+      <section class="mt-8 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-900" data-config-warning hidden>
+        Faltan las variables de Supabase. Agrega `PUBLIC_SUPABASE_URL` y `PUBLIC_SUPABASE_ANON_KEY` en `.env`.
+      </section>
+
+      <section class="mt-8 grid gap-6 lg:grid-cols-[0.75fr_1.25fr]">
+        <form class="rounded-lg border border-black/10 bg-white p-6 shadow-sm" data-login-form>
+          <h2 class="text-2xl font-extrabold text-forest">Ingresar</h2>
+          <p class="mt-2 text-sm leading-6 text-ink/65">Usa el correo y la contrasena creados en Supabase Auth.</p>
+          <div class="mt-5 grid gap-4">
+            <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="email" type="email" placeholder="Correo electronico" required />
+            <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="password" type="password" placeholder="Contrasena" required />
+            <button class="rounded-lg bg-forest px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit">
+              Ingresar
+            </button>
+          </div>
+        </form>
+
+        <section class="hidden rounded-lg border border-black/10 bg-white p-6 shadow-sm" data-admin-panel>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 class="text-2xl font-extrabold text-forest">Fotos de la galeria</h2>
+              <p class="mt-2 text-sm leading-6 text-ink/65">Sube imagenes JPG, PNG, WebP o AVIF. La foto se mostrara completa, sin recorte.</p>
+            </div>
+            <a class="rounded-lg border border-black/10 px-4 py-2 text-center text-sm font-bold text-forest hover:border-forest" href="/#gallery">
+              Ver galeria
+            </a>
+          </div>
+
+          <form class="mt-6 grid gap-4 rounded-lg bg-cream p-4" data-upload-form>
+            <label class="grid gap-2 text-sm font-bold text-ink/75">
+              Descripcion de la foto
+              <input class="rounded-lg border border-black/15 bg-white px-4 py-3 text-base font-normal outline-none focus:border-forest" name="alt" type="text" placeholder="Ejemplo: ceviche de atun servido en plato" />
+            </label>
+            <label class="grid gap-2 text-sm font-bold text-ink/75">
+              Orden en la galeria
+              <input class="rounded-lg border border-black/15 bg-white px-4 py-3 text-base font-normal outline-none focus:border-forest" name="sort_order" type="number" placeholder="0 aparece primero, 100 aparece al final" />
+            </label>
+            <label class="grid gap-2 text-sm font-bold text-ink/75">
+              Foto
+              <input class="rounded-lg border border-black/15 bg-white px-4 py-3 text-base font-normal outline-none focus:border-forest" name="photo" type="file" accept="image/png,image/jpeg,image/webp,image/avif" required />
+            </label>
+            <button class="rounded-lg bg-clay px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit">
+              Subir foto
+            </button>
+          </form>
+
+          <p class="mt-4 min-h-6 text-sm font-semibold text-ink/70" data-status></p>
+          <div class="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3" data-admin-gallery></div>
+        </section>
+      </section>
+    </main>
+
+    <template data-photo-template>
+      <article class="overflow-hidden rounded-lg border border-black/10 bg-white shadow-sm">
+        <div class="grid min-h-56 place-items-center bg-cream">
+          <img class="h-56 w-full object-cover" data-photo-image alt="" />
+        </div>
+        <div class="grid gap-3 p-4">
+          <p class="text-sm font-semibold leading-6 text-ink/70" data-photo-alt></p>
+          <button class="rounded-lg border border-red-200 px-4 py-2 text-sm font-bold text-red-700 hover:bg-red-50" type="button" data-delete-photo>
+            Eliminar foto
+          </button>
+        </div>
+      </article>
+    </template>
+
+    <div
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
+      data-delete-modal
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-modal-title"
+    >
+      <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-2xl">
+        <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay">Eliminar foto</p>
+        <h2 id="delete-modal-title" class="mt-3 font-serif text-3xl font-bold text-forest">
+          Confirmar eliminacion
+        </h2>
+        <p class="mt-3 leading-7 text-ink/70">
+          Esta foto se quitara de la galeria publica y no podra recuperarse desde este panel.
+        </p>
+        <p class="mt-4 rounded-lg bg-cream p-3 text-sm font-semibold leading-6 text-ink/75" data-delete-modal-label hidden></p>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          <button class="rounded-lg border border-black/10 px-4 py-3 font-extrabold text-ink hover:border-forest hover:text-forest" type="button" data-cancel-delete>
+            Cancelar
+          </button>
+          <button class="rounded-lg bg-red-700 px-4 py-3 font-extrabold text-white hover:bg-red-800" type="button" data-confirm-delete>
+            Si, eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      import { createClient } from "@supabase/supabase-js";
+
+      const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+      const galleryBucket = import.meta.env.PUBLIC_SUPABASE_GALLERY_BUCKET || "chef-gallery";
+      const galleryTable = import.meta.env.PUBLIC_SUPABASE_GALLERY_TABLE || "gallery_images";
+
+      const configWarning = document.querySelector("[data-config-warning]");
+      const loginForm = document.querySelector("[data-login-form]");
+      const adminPanel = document.querySelector("[data-admin-panel]");
+      const uploadForm = document.querySelector("[data-upload-form]");
+      const logoutButton = document.querySelector("[data-logout]");
+      const statusNode = document.querySelector("[data-status]");
+      const galleryNode = document.querySelector("[data-admin-gallery]");
+      const template = document.querySelector("[data-photo-template]");
+      const deleteModal = document.querySelector("[data-delete-modal]");
+      const deleteModalLabel = document.querySelector("[data-delete-modal-label]");
+      const cancelDeleteButton = document.querySelector("[data-cancel-delete]");
+      const confirmDeleteButton = document.querySelector("[data-confirm-delete]");
+
+      let supabase;
+      let pendingDeleteResolve;
+
+      function setStatus(message, isError = false) {
+        if (!statusNode) return;
+        statusNode.textContent = message;
+        statusNode.className = `mt-4 min-h-6 text-sm font-semibold ${isError ? "text-red-700" : "text-ink/70"}`;
+      }
+
+      function safeFileName(fileName) {
+        const cleanName = fileName
+          .toLowerCase()
+          .replace(/[^a-z0-9.]+/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+        return cleanName || "gallery-photo.jpg";
+      }
+
+      function askDeleteConfirmation(photo) {
+        return new Promise((resolve) => {
+          pendingDeleteResolve = resolve;
+
+          if (deleteModalLabel) {
+            if (photo.alt_text) {
+              deleteModalLabel.textContent = photo.alt_text;
+              deleteModalLabel.hidden = false;
+            } else {
+              deleteModalLabel.hidden = true;
+            }
+          }
+
+          deleteModal?.classList.remove("hidden");
+          deleteModal?.classList.add("flex");
+          confirmDeleteButton?.focus();
+        });
+      }
+
+      function closeDeleteModal(result) {
+        deleteModal?.classList.add("hidden");
+        deleteModal?.classList.remove("flex");
+        pendingDeleteResolve?.(result);
+        pendingDeleteResolve = undefined;
+      }
+
+      function showAdmin() {
+        loginForm?.classList.add("hidden");
+        adminPanel?.classList.remove("hidden");
+        logoutButton?.classList.remove("hidden");
+      }
+
+      function showLogin() {
+        loginForm?.classList.remove("hidden");
+        adminPanel?.classList.add("hidden");
+        logoutButton?.classList.add("hidden");
+      }
+
+      async function loadGallery() {
+        if (!galleryNode || !template) return;
+
+        galleryNode.innerHTML = "";
+        setStatus("Cargando fotos...");
+
+        const { data, error } = await supabase
+          .from(galleryTable)
+          .select("id, image_url, alt_text, storage_path, sort_order, created_at")
+          .order("sort_order", { ascending: true })
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          setStatus(error.message, true);
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          setStatus("Todavia no hay fotos publicadas.");
+          return;
+        }
+
+        data.forEach((photo) => {
+          const node = template.content.cloneNode(true);
+          const image = node.querySelector("[data-photo-image]");
+          const alt = node.querySelector("[data-photo-alt]");
+          const deleteButton = node.querySelector("[data-delete-photo]");
+
+          image.src = photo.image_url;
+          image.alt = photo.alt_text || "Foto de la galeria";
+          alt.textContent = photo.alt_text || "Sin descripcion";
+          deleteButton.addEventListener("click", async () => deletePhoto(photo));
+
+          galleryNode.appendChild(node);
+        });
+
+        setStatus(`${data.length} foto${data.length === 1 ? "" : "s"} publicada${data.length === 1 ? "" : "s"}.`);
+      }
+
+      async function deletePhoto(photo) {
+        const confirmed = await askDeleteConfirmation(photo);
+        if (!confirmed) return;
+
+        setStatus("Eliminando foto...");
+
+        if (photo.storage_path) {
+          const { error: storageError } = await supabase.storage.from(galleryBucket).remove([photo.storage_path]);
+          if (storageError) {
+            setStatus(storageError.message, true);
+            return;
+          }
+        }
+
+        const { error } = await supabase.from(galleryTable).delete().eq("id", photo.id);
+        if (error) {
+          setStatus(error.message, true);
+          return;
+        }
+
+        await loadGallery();
+      }
+
+      cancelDeleteButton?.addEventListener("click", () => closeDeleteModal(false));
+      confirmDeleteButton?.addEventListener("click", () => closeDeleteModal(true));
+      deleteModal?.addEventListener("click", (event) => {
+        if (event.target === deleteModal) closeDeleteModal(false);
+      });
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !deleteModal?.classList.contains("hidden")) {
+          closeDeleteModal(false);
+        }
+      });
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        configWarning.hidden = false;
+        loginForm?.querySelectorAll("input, button").forEach((node) => {
+          node.disabled = true;
+        });
+      } else {
+        supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+        const { data } = await supabase.auth.getSession();
+        if (data.session) {
+          showAdmin();
+          await loadGallery();
+        }
+
+        loginForm?.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const formData = new FormData(loginForm);
+          const email = String(formData.get("email") || "");
+          const password = String(formData.get("password") || "");
+
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) {
+            alert(error.message);
+            return;
+          }
+
+          showAdmin();
+          await loadGallery();
+        });
+
+        logoutButton?.addEventListener("click", async () => {
+          await supabase.auth.signOut();
+          showLogin();
+        });
+
+        uploadForm?.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const formData = new FormData(uploadForm);
+          const file = formData.get("photo");
+
+          if (!(file instanceof File)) return;
+
+          setStatus("Subiendo foto...");
+
+          const { data: userData, error: userError } = await supabase.auth.getUser();
+          if (userError || !userData.user) {
+            setStatus("Por favor, ingresa de nuevo.", true);
+            showLogin();
+            return;
+          }
+
+          const storagePath = `${userData.user.id}/${Date.now()}-${safeFileName(file.name)}`;
+          const { error: uploadError } = await supabase.storage
+            .from(galleryBucket)
+            .upload(storagePath, file, { cacheControl: "31536000", upsert: false });
+
+          if (uploadError) {
+            setStatus(uploadError.message, true);
+            return;
+          }
+
+          const { data: publicUrlData } = supabase.storage.from(galleryBucket).getPublicUrl(storagePath);
+          const altText = String(formData.get("alt") || "").trim();
+          const sortOrderValue = String(formData.get("sort_order") || "").trim();
+          const sortOrder = sortOrderValue ? Number(sortOrderValue) : 100;
+
+          const { error: insertError } = await supabase.from(galleryTable).insert({
+            image_url: publicUrlData.publicUrl,
+            storage_path: storagePath,
+            alt_text: altText,
+            sort_order: Number.isFinite(sortOrder) ? sortOrder : 100,
+          });
+
+          if (insertError) {
+            setStatus(insertError.message, true);
+            return;
+          }
+
+          uploadForm.reset();
+          await loadGallery();
+        });
+      }
+    </script>
+  </body>
+</html>

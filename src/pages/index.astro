@@ -1,0 +1,682 @@
+---
+import "../styles/global.css";
+
+const services = [
+  {
+    title: "Private dinners",
+    titleEs: "Cenas privadas",
+    description:
+      "Intimate dinners prepared at your table with fresh ingredients, polished timing, and warm service.",
+    descriptionEs:
+      "Cenas intimas preparadas en tu mesa con ingredientes frescos, tiempos cuidados y servicio calido.",
+  },
+  {
+    title: "Villa service",
+    titleEs: "Servicio para villas",
+    description:
+      "Private chef service for villas, vacation homes, boutique stays, and luxury rentals.",
+    descriptionEs:
+      "Servicio de chef privado para villas, casas de vacaciones, hoteles boutique y rentas de lujo.",
+  },
+  {
+    title: "Events and celebrations",
+    titleEs: "Eventos y celebraciones",
+    description:
+      "Birthdays, intimate weddings, retreats, proposals, and family gatherings across Costa Rica.",
+    descriptionEs:
+      "Cumpleanos, bodas intimas, retiros, propuestas y reuniones familiares en Costa Rica.",
+  },
+  {
+    title: "Tasting menu",
+    titleEs: "Menu degustacion",
+    description:
+      "Multi-course seasonal menus designed for guests who want a refined Costa Rican dining experience.",
+    descriptionEs:
+      "Menus de varios tiempos disenados para quienes buscan una experiencia gastronomica costarricense refinada.",
+  },
+];
+
+const fallbackGallery = [
+  {
+    src: "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1400&q=85",
+    alt: "Chef plating a dish in a private kitchen",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=85",
+    alt: "Elegant restaurant table with plated food",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=85",
+    alt: "Fresh Costa Rican inspired dinner table",
+  },
+];
+
+const localGalleryFiles = import.meta.glob("../assets/gallery/*.{jpg,jpeg,png,webp,avif}", {
+  eager: true,
+  import: "default",
+  query: "?url",
+});
+
+const localGallery = Object.entries(localGalleryFiles).map(([path, src]) => {
+  const filename = path.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "chef dish";
+  const label = filename.replace(/[-_]+/g, " ");
+
+  return {
+    src,
+    alt: `Private chef Costa Rica gallery photo: ${label}`,
+  };
+});
+
+const gallery = localGallery.length > 0 ? localGallery : fallbackGallery;
+
+const chefHighlights = [
+  {
+    title: "Seasonal ingredients",
+    titleEs: "Ingredientes de temporada",
+    copy: "Menus are guided by market produce, local seafood, tropical fruit, herbs, and Costa Rican flavors.",
+    copyEs: "Los menus se inspiran en productos de mercado, mariscos locales, frutas tropicales, hierbas y sabores de Costa Rica.",
+  },
+  {
+    title: "Personalized planning",
+    titleEs: "Planeacion personalizada",
+    copy: "Each experience is adapted to the property, guest count, dietary needs, and rhythm of the occasion.",
+    copyEs: "Cada experiencia se adapta a la propiedad, cantidad de invitados, necesidades alimentarias y ritmo de la ocasion.",
+  },
+  {
+    title: "Quiet premium service",
+    titleEs: "Servicio premium y discreto",
+    copy: "From prep to cleanup, the evening is handled with care so guests can stay present at the table.",
+    copyEs: "Desde la preparacion hasta la limpieza, la noche se maneja con cuidado para que todos disfruten la mesa.",
+  },
+];
+
+const reviews = [
+  {
+    quote:
+      "The dinner felt effortless and special. Every course had a local touch, and the service was calm, warm, and precise.",
+    quoteEs:
+      "La cena se sintio especial y sin complicaciones. Cada plato tenia un toque local y el servicio fue calido, tranquilo y preciso.",
+    author: "Megan L.",
+    location: "Nosara",
+  },
+  {
+    quote:
+      "Our favorite part was watching the chef explain the ingredients. It turned dinner into a real Costa Rica memory.",
+    quoteEs:
+      "Nuestra parte favorita fue escuchar al chef explicar los ingredientes. Convirtio la cena en un recuerdo real de Costa Rica.",
+    author: "Daniel R.",
+    location: "Tamarindo",
+  },
+  {
+    quote:
+      "Beautiful plating, fresh seafood, and a menu that worked for everyone in the group.",
+    quoteEs:
+      "Presentacion hermosa, mariscos frescos y un menu que funciono para todo el grupo.",
+    author: "Sofia M.",
+    location: "Manuel Antonio",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Private Chef Costa Rica | Villa Dinners and Events</title>
+    <meta
+      name="description"
+      content="Private chef experiences in Costa Rica for villas, events, wellness retreats, and intimate celebrations."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-sans text-ink antialiased">
+    <header class="sticky top-0 z-50 border-b border-black/10 bg-cream/90 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+        <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="Private Chef Costa Rica home">
+          <span class="grid h-10 w-10 place-items-center rounded-lg bg-forest text-sm font-black text-white">CR</span>
+          <span class="min-w-0">
+            <span class="block truncate text-sm font-extrabold tracking-wide">Private Chef Costa Rica</span>
+            <span class="block truncate text-xs font-medium text-ink/60" data-i18n="brandTagline">Villa dinners and private events</span>
+          </span>
+        </a>
+
+        <nav class="hidden items-center gap-6 text-sm font-semibold text-ink/70 md:flex">
+          <a href="#services" class="hover:text-forest" data-i18n="navServices">Services</a>
+          <a href="#chef" class="hover:text-forest" data-i18n="navChef">About</a>
+          <a href="#gallery" class="hover:text-forest" data-i18n="navGallery">Gallery</a>
+          <a href="#reviews" class="hover:text-forest" data-i18n="navReviews">Reviews</a>
+          <a href="#contact" class="hover:text-forest" data-i18n="navContact">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            class="rounded-lg border border-black/10 bg-white px-3 py-2 text-sm font-bold text-forest"
+            data-lang-toggle
+            aria-label="Change language"
+          >
+            ES
+          </button>
+          <a
+            href="#contact"
+            class="rounded-lg bg-forest px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-ink"
+            data-i18n="bookCta"
+          >
+            Book
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="relative min-h-[calc(100vh-68px)] overflow-hidden">
+        <img
+          class="absolute inset-0 h-full w-full object-cover"
+          src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=2200&q=85"
+          alt="Private chef preparing food in a bright kitchen"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent"></div>
+        <div class="relative mx-auto flex min-h-[calc(100vh-68px)] max-w-7xl items-center px-4 pb-20 pt-16 sm:px-6 lg:px-8">
+          <div class="max-w-3xl text-white">
+            <p class="mb-4 text-sm font-extrabold uppercase tracking-[0.18em] text-white/80" data-i18n="heroKicker">
+              Private culinary experiences in Costa Rica
+            </p>
+            <h1 class="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-7xl" data-i18n="heroTitle">
+              A private chef experience for your villa, retreat, or celebration.
+            </h1>
+            <p class="mt-6 max-w-2xl text-lg leading-8 text-white/88" data-i18n="heroCopy">
+              Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.
+            </p>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#contact" class="rounded-lg bg-clay px-6 py-3.5 text-center font-extrabold text-white transition hover:bg-white hover:text-ink" data-i18n="heroPrimary">
+                Request availability
+              </a>
+              <a href="#reviews" class="rounded-lg border border-white/40 bg-white/10 px-6 py-3.5 text-center font-extrabold text-white backdrop-blur transition hover:bg-white hover:text-ink" data-i18n="heroSecondary">
+                Read guest reviews
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section-pad bg-cream">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+            <div>
+              <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="servicesKicker">Services</p>
+              <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="servicesTitle">
+                Built around the way you want to gather.
+              </h2>
+            </div>
+            <p class="max-w-2xl text-lg leading-8 text-ink/70" data-i18n="servicesCopy">
+              From Tamarindo to Nosara, Santa Teresa, Manuel Antonio, La Fortuna, San Jose, and beyond, each menu is planned around your location, schedule, tastes, and guests.
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {services.map((service, index) => (
+              <article class="rounded-lg border border-black/10 bg-white p-6 shadow-sm">
+                <span class="text-sm font-black text-clay">0{index + 1}</span>
+                <h3 class="mt-4 text-2xl font-extrabold text-forest" data-en={service.title} data-es={service.titleEs}>
+                  {service.title}
+                </h3>
+                <p class="mt-3 leading-7 text-ink/70" data-en={service.description} data-es={service.descriptionEs}>
+                  {service.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="chef" class="section-pad bg-white">
+        <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <img
+            class="min-h-[460px] w-full rounded-lg object-cover shadow-sm"
+            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1400&q=85"
+            alt="Private chef finishing a dish"
+          />
+
+          <div class="flex flex-col justify-center">
+            <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="chefKicker">About the chef</p>
+            <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="chefTitle">
+              A Costa Rica private chef experience with local flavor and calm service.
+            </h2>
+            <p class="mt-5 text-lg leading-8 text-ink/70" data-i18n="chefCopy">
+              Every booking starts with a conversation: where you are staying, what you love to eat, what guests need, and what kind of atmosphere you want. The result is a menu that feels personal without making hosting complicated.
+            </p>
+            <div class="mt-8 grid gap-4">
+              {chefHighlights.map((item) => (
+                <article class="rounded-lg bg-cream p-5">
+                  <h3 class="font-extrabold text-forest" data-en={item.title} data-es={item.titleEs}>{item.title}</h3>
+                  <p class="mt-2 leading-7 text-ink/70" data-en={item.copy} data-es={item.copyEs}>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" class="section-pad bg-cream">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl">
+            <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="galleryKicker">Gallery</p>
+            <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="galleryTitle">
+              Tropical, elegant, and made for the table in front of you.
+            </h2>
+            <p class="mt-5 text-lg leading-8 text-ink/70" data-i18n="galleryCopy">
+              A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.
+            </p>
+          </div>
+
+          <div class="mt-12" data-gallery-carousel>
+            <div class="relative overflow-hidden rounded-lg">
+              <div class="flex gap-5 transition-transform duration-700 ease-out" data-public-gallery>
+                {gallery.map((image) => (
+                  <figure class="min-w-full rounded-lg bg-white p-3 shadow-sm md:min-w-[calc(50%_-_0.625rem)] lg:min-w-[calc(33.333%_-_0.875rem)]">
+                    <img
+                      class="h-80 w-full rounded-md object-cover"
+                      src={image.src}
+                      alt={image.alt}
+                    />
+                  </figure>
+                ))}
+              </div>
+
+              <button
+                class="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-2xl font-bold text-forest shadow-lg transition hover:bg-forest hover:text-white"
+                type="button"
+                data-gallery-prev
+                aria-label="Previous gallery photo"
+              >
+                ‹
+              </button>
+              <button
+                class="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-2xl font-bold text-forest shadow-lg transition hover:bg-forest hover:text-white"
+                type="button"
+                data-gallery-next
+                aria-label="Next gallery photo"
+              >
+                ›
+              </button>
+            </div>
+
+            <div class="mt-5 flex justify-center gap-2" data-gallery-dots aria-label="Gallery photo navigation"></div>
+          </div>
+          <p class="mt-5 hidden text-sm font-semibold text-ink/60" data-gallery-status></p>
+        </div>
+      </section>
+
+      <section id="reviews" class="section-pad bg-[#eef2e6]">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="reviewsKicker">Guest reviews</p>
+              <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="reviewsTitle">
+                Share what made the experience memorable.
+              </h2>
+              <p class="mt-5 leading-7 text-ink/70" data-i18n="reviewsCopy">
+                Guests can leave a review and tell us their favorite part of the evening.
+              </p>
+            </div>
+
+            <div class="grid gap-5">
+              {reviews.map((review) => (
+                <article class="rounded-lg border border-black/10 bg-white p-6 shadow-sm">
+                  <p class="text-lg leading-8 text-ink/80" data-en={`"${review.quote}"`} data-es={`"${review.quoteEs}"`}>"{review.quote}"</p>
+                  <p class="mt-4 text-sm font-extrabold text-forest">{review.author} / {review.location}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section-pad bg-cream">
+        <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <div class="rounded-lg bg-forest p-6 text-white sm:p-8">
+            <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-white/70" data-i18n="contactKicker">Booking</p>
+            <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="contactTitle">
+              Tell us about your private chef experience.
+            </h2>
+            <p class="mt-5 text-lg leading-8 text-white/82" data-i18n="contactCopy">
+              Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.
+            </p>
+
+            <div class="mt-8 grid gap-3 text-sm font-semibold text-white/90">
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 hover:bg-white hover:text-forest" href="https://wa.me/50600000000" target="_blank" rel="noreferrer">
+                WhatsApp: +506 0000 0000
+              </a>
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 hover:bg-white hover:text-forest" href="mailto:reservations@privatechefcr.com">
+                reservations@privatechefcr.com
+              </a>
+              <span class="rounded-lg border border-white/15 bg-white/10 px-4 py-3" data-i18n="areas">
+                Serving villas, homes, and private venues across Costa Rica.
+              </span>
+              <span class="rounded-lg border border-white/15 bg-white/10 px-4 py-3" data-i18n="location">
+                Location: Costa Rica
+              </span>
+            </div>
+          </div>
+
+          <div class="grid gap-6">
+            <form class="rounded-lg border border-black/10 bg-white p-6 shadow-sm sm:p-8" data-booking-form>
+              <h3 class="text-2xl font-extrabold text-forest" data-i18n="bookingFormTitle">Request a date</h3>
+              <div class="mt-5 grid gap-4">
+                <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="name" type="text" placeholder="Name" data-placeholder-en="Name" data-placeholder-es="Nombre" required />
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="date" type="date" required />
+                  <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="guests" type="number" min="1" placeholder="Guests" data-placeholder-en="Guests" data-placeholder-es="Personas" required />
+                </div>
+                <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="location" type="text" placeholder="Location in Costa Rica" data-placeholder-en="Location in Costa Rica" data-placeholder-es="Ubicacion en Costa Rica" required />
+                <textarea class="min-h-32 rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="details" placeholder="Occasion, menu ideas, allergies, or preferences" data-placeholder-en="Occasion, menu ideas, allergies, or preferences" data-placeholder-es="Ocasion, ideas de menu, alergias o preferencias"></textarea>
+                <button class="rounded-lg bg-clay px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit" data-i18n="bookingButton">
+                  Send by WhatsApp
+                </button>
+              </div>
+            </form>
+
+            <form class="rounded-lg border border-black/10 bg-white p-6 shadow-sm sm:p-8" data-review-form>
+              <h3 class="text-2xl font-extrabold text-forest" data-i18n="reviewFormTitle">Leave a review</h3>
+              <div class="mt-5 grid gap-4">
+                <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="name" type="text" placeholder="Your name" data-placeholder-en="Your name" data-placeholder-es="Tu nombre" required />
+                <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="favorite" type="text" placeholder="Favorite part of the experience" data-placeholder-en="Favorite part of the experience" data-placeholder-es="Parte favorita de la experiencia" required />
+                <textarea class="min-h-32 rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="review" placeholder="Write your review" data-placeholder-en="Write your review" data-placeholder-es="Escribe tu resena" required></textarea>
+                <button class="rounded-lg bg-forest px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit" data-i18n="reviewButton">
+                  Send review
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-black/10 bg-white py-8">
+      <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm font-semibold text-ink/65 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+        <p>Private Chef Costa Rica</p>
+        <p data-i18n="footerText">Private villa dinners, events, wellness menus, and guest reviews.</p>
+      </div>
+    </footer>
+
+    <script>
+      import { createClient } from "@supabase/supabase-js";
+
+      const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+      const galleryBucket = import.meta.env.PUBLIC_SUPABASE_GALLERY_BUCKET || "chef-gallery";
+      const galleryTable = import.meta.env.PUBLIC_SUPABASE_GALLERY_TABLE || "gallery_images";
+
+      const translations = {
+        en: {
+          brandTagline: "Villa dinners and private events",
+          navServices: "Services",
+          navChef: "About",
+          navGallery: "Gallery",
+          navReviews: "Reviews",
+          navContact: "Contact",
+          bookCta: "Book",
+          heroKicker: "Private culinary experiences in Costa Rica",
+          heroTitle: "A private chef experience for your villa, retreat, or celebration.",
+          heroCopy: "Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.",
+          heroPrimary: "Request availability",
+          heroSecondary: "Read guest reviews",
+          servicesKicker: "Services",
+          servicesTitle: "Built around the way you want to gather.",
+          servicesCopy: "From private dinners and villa service to events and tasting menus, each experience is planned around your location, schedule, tastes, and guests.",
+          chefKicker: "About the chef",
+          chefTitle: "A Costa Rica private chef experience with local flavor and calm service.",
+          chefCopy: "Every booking starts with a conversation: where you are staying, what you love to eat, what guests need, and what kind of atmosphere you want. The result is a menu that feels personal without making hosting complicated.",
+          galleryKicker: "Gallery",
+          galleryTitle: "Tropical, elegant, and made for the table in front of you.",
+          galleryCopy: "A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.",
+          reviewsKicker: "Guest reviews",
+          reviewsTitle: "Share what made the experience memorable.",
+          reviewsCopy: "Guests can leave a review and tell us their favorite part of the evening.",
+          contactKicker: "Booking",
+          contactTitle: "Tell us about your private chef experience.",
+          contactCopy: "Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.",
+          areas: "Serving villas, homes, and private venues across Costa Rica.",
+          location: "Location: Costa Rica",
+          bookingFormTitle: "Request a date",
+          bookingButton: "Send by WhatsApp",
+          reviewFormTitle: "Leave a review",
+          reviewButton: "Send review",
+          footerText: "Private villa dinners, events, wellness menus, and guest reviews.",
+        },
+        es: {
+          brandTagline: "Cenas en villa y eventos privados",
+          navServices: "Servicios",
+          navChef: "Chef",
+          navGallery: "Galeria",
+          navReviews: "Resenas",
+          navContact: "Contacto",
+          bookCta: "Reservar",
+          heroKicker: "Experiencias culinarias privadas en Costa Rica",
+          heroTitle: "Una experiencia de chef privado para tu villa, retiro o celebracion.",
+          heroCopy: "Ingredientes locales frescos, menus personalizados y servicio cuidado para comidas memorables en Costa Rica.",
+          heroPrimary: "Solicitar disponibilidad",
+          heroSecondary: "Leer resenas",
+          servicesKicker: "Servicios",
+          servicesTitle: "Disenado para la forma en que quieres reunir a tus invitados.",
+          servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y menus degustacion, cada experiencia se planea segun tu ubicacion, horario, gustos e invitados.",
+          chefKicker: "Sobre el chef",
+          chefTitle: "Una experiencia de chef privado en Costa Rica con sabor local y servicio tranquilo.",
+          chefCopy: "Cada reserva empieza con una conversacion: donde te hospedas, que te gusta comer, que necesitan tus invitados y que ambiente quieres. El resultado es un menu personal sin complicar el evento.",
+          galleryKicker: "Galeria",
+          galleryTitle: "Tropical, elegante y hecho para la mesa frente a ti.",
+          galleryCopy: "Una muestra visual de cenas privadas, platos servidos, ingredientes frescos y hospitalidad relajada en Costa Rica.",
+          reviewsKicker: "Resenas de clientes",
+          reviewsTitle: "Comparte que hizo memorable la experiencia.",
+          reviewsCopy: "Los clientes pueden dejar una resena y contar su parte favorita de la noche.",
+          contactKicker: "Reservas",
+          contactTitle: "Cuentanos sobre tu experiencia de chef privado.",
+          contactCopy: "Envia fecha, ubicacion, numero de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
+          areas: "Servicio para villas, casas y espacios privados en Costa Rica.",
+          location: "Ubicacion: Costa Rica",
+          bookingFormTitle: "Solicitar fecha",
+          bookingButton: "Enviar por WhatsApp",
+          reviewFormTitle: "Dejar una resena",
+          reviewButton: "Enviar resena",
+          footerText: "Cenas privadas, eventos, menus wellness y resenas de clientes.",
+        },
+      };
+
+      const toggle = document.querySelector("[data-lang-toggle]");
+      let currentLang = "en";
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll("[data-i18n]").forEach((node) => {
+          const key = node.getAttribute("data-i18n");
+          if (key && translations[lang][key]) node.textContent = translations[lang][key];
+        });
+
+        document.querySelectorAll("[data-en][data-es]").forEach((node) => {
+          const text = node.getAttribute(lang === "en" ? "data-en" : "data-es");
+          if (text) node.textContent = text;
+        });
+
+        document.querySelectorAll("[data-placeholder-en][data-placeholder-es]").forEach((node) => {
+          const text = node.getAttribute(lang === "en" ? "data-placeholder-en" : "data-placeholder-es");
+          if (text) node.setAttribute("placeholder", text);
+        });
+
+        if (toggle) toggle.textContent = lang === "en" ? "ES" : "EN";
+      }
+
+      toggle?.addEventListener("click", () => setLanguage(currentLang === "en" ? "es" : "en"));
+
+      function formToMessage(form, title) {
+        const data = new FormData(form);
+        const lines = [title];
+        for (const [key, value] of data.entries()) {
+          if (String(value).trim()) lines.push(`${key}: ${value}`);
+        }
+        return lines.join("\n");
+      }
+
+      document.querySelector("[data-booking-form]")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const message = formToMessage(event.currentTarget, currentLang === "en" ? "Private chef booking request" : "Solicitud de chef privado");
+        window.open(`https://wa.me/50600000000?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+      });
+
+      document.querySelector("[data-review-form]")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const message = formToMessage(event.currentTarget, currentLang === "en" ? "Guest review" : "Resena de cliente");
+        window.open(`https://wa.me/50600000000?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+      });
+
+      const galleryTrack = document.querySelector("[data-public-gallery]");
+      const galleryDots = document.querySelector("[data-gallery-dots]");
+      const galleryPrev = document.querySelector("[data-gallery-prev]");
+      const galleryNext = document.querySelector("[data-gallery-next]");
+      let galleryIndex = 0;
+      let galleryTimer;
+
+      function getGallerySlides() {
+        return Array.from(galleryTrack?.children || []);
+      }
+
+      function getVisibleGalleryCount() {
+        if (window.matchMedia("(min-width: 1024px)").matches) return 3;
+        if (window.matchMedia("(min-width: 768px)").matches) return 2;
+        return 1;
+      }
+
+      function getMaxGalleryIndex() {
+        return Math.max(getGallerySlides().length - getVisibleGalleryCount(), 0);
+      }
+
+      function getGalleryStep() {
+        const firstSlide = getGallerySlides()[0];
+        if (!firstSlide || !galleryTrack) return 0;
+        const gap = Number.parseFloat(window.getComputedStyle(galleryTrack).columnGap || "0");
+        return firstSlide.getBoundingClientRect().width + gap;
+      }
+
+      function renderGalleryDots() {
+        if (!galleryDots) return;
+        const maxIndex = getMaxGalleryIndex();
+        galleryDots.innerHTML = "";
+
+        for (let index = 0; index <= maxIndex; index += 1) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "h-2.5 w-2.5 rounded-full bg-ink/25 transition hover:bg-forest";
+          button.setAttribute("aria-label", `Go to gallery photo ${index + 1}`);
+          button.addEventListener("click", () => {
+            showGallerySlide(index);
+            restartGalleryAutoplay();
+          });
+          galleryDots.appendChild(button);
+        }
+
+        galleryDots.classList.toggle("hidden", maxIndex === 0);
+        galleryPrev?.classList.toggle("hidden", maxIndex === 0);
+        galleryNext?.classList.toggle("hidden", maxIndex === 0);
+      }
+
+      function showGallerySlide(index) {
+        if (!galleryTrack || getGallerySlides().length === 0) return;
+        const maxIndex = getMaxGalleryIndex();
+
+        galleryIndex = maxIndex === 0 ? 0 : (index + maxIndex + 1) % (maxIndex + 1);
+        galleryTrack.style.transform = `translateX(-${galleryIndex * getGalleryStep()}px)`;
+
+        Array.from(galleryDots?.children || []).forEach((dot, dotIndex) => {
+          dot.className =
+            dotIndex === galleryIndex
+              ? "h-2.5 w-8 rounded-full bg-forest transition"
+              : "h-2.5 w-2.5 rounded-full bg-ink/25 transition hover:bg-forest";
+        });
+      }
+
+      function startGalleryAutoplay() {
+        window.clearInterval(galleryTimer);
+        if (getMaxGalleryIndex() === 0) return;
+        galleryTimer = window.setInterval(() => {
+          showGallerySlide(galleryIndex + 1);
+        }, 4500);
+      }
+
+      function restartGalleryAutoplay() {
+        startGalleryAutoplay();
+      }
+
+      galleryPrev?.addEventListener("click", () => {
+        showGallerySlide(galleryIndex - 1);
+        restartGalleryAutoplay();
+      });
+
+      galleryNext?.addEventListener("click", () => {
+        showGallerySlide(galleryIndex + 1);
+        restartGalleryAutoplay();
+      });
+
+      renderGalleryDots();
+      showGallerySlide(0);
+      startGalleryAutoplay();
+
+      window.addEventListener("resize", () => {
+        galleryIndex = Math.min(galleryIndex, getMaxGalleryIndex());
+        renderGalleryDots();
+        showGallerySlide(galleryIndex);
+        restartGalleryAutoplay();
+      });
+
+      async function loadPublishedGallery() {
+        const grid = document.querySelector("[data-public-gallery]");
+        const status = document.querySelector("[data-gallery-status]");
+
+        if (!grid || !supabaseUrl || !supabaseAnonKey) return;
+
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+        const { data, error } = await supabase
+          .from(galleryTable)
+          .select("image_url, alt_text, sort_order, created_at")
+          .order("sort_order", { ascending: true })
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          if (status) {
+            status.textContent = "Gallery is using local photos while the live gallery is unavailable.";
+            status.classList.remove("hidden");
+          }
+          return;
+        }
+
+        if (!data || data.length === 0) return;
+
+        grid.innerHTML = "";
+        data.forEach((image) => {
+          const figure = document.createElement("figure");
+          const img = document.createElement("img");
+          figure.className = "min-w-full rounded-lg bg-white p-3 shadow-sm md:min-w-[calc(50%_-_0.625rem)] lg:min-w-[calc(33.333%_-_0.875rem)]";
+          img.className = "h-80 w-full rounded-md object-cover";
+          img.src = image.image_url;
+          img.alt = image.alt_text || "Private chef Costa Rica gallery photo";
+          img.loading = "lazy";
+          figure.appendChild(img);
+          grid.appendChild(figure);
+        });
+
+        galleryIndex = 0;
+        renderGalleryDots();
+        showGallerySlide(0);
+        startGalleryAutoplay();
+      }
+
+      loadPublishedGallery();
+    </script>
+  </body>
+</html>

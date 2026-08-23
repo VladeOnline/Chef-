@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #fbf8f1;
+}
+
+::selection {
+  background: #1f4d3a;
+  color: #ffffff;
+}
+
+.section-pad {
+  padding-block: clamp(4rem, 7vw, 7rem);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
