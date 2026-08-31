@@ -8,8 +8,8 @@ export default {
         serif: ["Fraunces", "Georgia", "serif"],
       },
       colors: {
-        forest: "#1f4d3a",
-        leaf: "#6f8f4e",
+        forest: "#0f2f21",
+        leaf: "#2f6b4d",
         clay: "#b86f45",
         cream: "#fbf8f1",
         ink: "#1f2933",

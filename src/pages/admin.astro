@@ -7,7 +7,7 @@ import "../styles/global.css";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin de Galeria | Private Chef Costa Rica</title>
+    <title>Admin de Galeria | Chef Privado CR</title>
     <meta name="robots" content="noindex" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,7 +19,7 @@ import "../styles/global.css";
   <body class="min-h-screen bg-cream font-sans text-ink antialiased">
     <header class="border-b border-black/10 bg-white">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <a href="/" class="text-sm font-extrabold text-forest">Private Chef Costa Rica</a>
+        <a href="/" class="text-sm font-extrabold text-forest">Chef Privado CR</a>
         <button
           class="hidden rounded-lg border border-black/10 bg-white px-4 py-2 text-sm font-bold text-ink hover:border-forest hover:text-forest"
           type="button"
@@ -53,6 +53,7 @@ import "../styles/global.css";
             <button class="rounded-lg bg-forest px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit">
               Ingresar
             </button>
+            <p class="min-h-6 text-sm font-semibold text-ink/70" data-login-status></p>
           </div>
         </form>
 
@@ -142,6 +143,7 @@ import "../styles/global.css";
 
       const configWarning = document.querySelector("[data-config-warning]");
       const loginForm = document.querySelector("[data-login-form]");
+      const loginStatusNode = document.querySelector("[data-login-status]");
       const adminPanel = document.querySelector("[data-admin-panel]");
       const uploadForm = document.querySelector("[data-upload-form]");
       const logoutButton = document.querySelector("[data-logout]");
@@ -160,6 +162,21 @@ import "../styles/global.css";
         if (!statusNode) return;
         statusNode.textContent = message;
         statusNode.className = `mt-4 min-h-6 text-sm font-semibold ${isError ? "text-red-700" : "text-ink/70"}`;
+      }
+
+      function setLoginStatus(message, isError = false) {
+        if (!loginStatusNode) return;
+        loginStatusNode.textContent = message;
+        loginStatusNode.className = `min-h-6 text-sm font-semibold ${isError ? "text-red-700" : "text-ink/70"}`;
+      }
+
+      function withTimeout(promise, message, ms = 15000) {
+        let timer;
+        const timeout = new Promise((_, reject) => {
+          timer = window.setTimeout(() => reject(new Error(message)), ms);
+        });
+
+        return Promise.race([promise, timeout]).finally(() => window.clearTimeout(timer));
       }
 
       function safeFileName(fileName) {
@@ -201,6 +218,7 @@ import "../styles/global.css";
         loginForm?.classList.add("hidden");
         adminPanel?.classList.remove("hidden");
         logoutButton?.classList.remove("hidden");
+        setLoginStatus("");
       }
 
       function showLogin() {
@@ -284,27 +302,32 @@ import "../styles/global.css";
 
       if (!supabaseUrl || !supabaseAnonKey) {
         configWarning.hidden = false;
+        setLoginStatus("Faltan las variables de Supabase en .env.", true);
         loginForm?.querySelectorAll("input, button").forEach((node) => {
           node.disabled = true;
         });
       } else {
         supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-        const { data } = await supabase.auth.getSession();
-        if (data.session) {
-          showAdmin();
-          await loadGallery();
-        }
-
         loginForm?.addEventListener("submit", async (event) => {
           event.preventDefault();
+          setLoginStatus("Revisando acceso...");
           const formData = new FormData(loginForm);
-          const email = String(formData.get("email") || "");
+          const email = String(formData.get("email") || "").trim();
           const password = String(formData.get("password") || "");
 
-          const { error } = await supabase.auth.signInWithPassword({ email, password });
-          if (error) {
-            alert(error.message);
+          try {
+            const { error } = await withTimeout(
+              supabase.auth.signInWithPassword({ email, password }),
+              "Supabase no respondio. Revisa si el proyecto esta pausado o si la URL/key son correctas.",
+            );
+
+            if (error) {
+              setLoginStatus(error.message, true);
+              return;
+            }
+          } catch (error) {
+            setLoginStatus(error.message || "No se pudo conectar con Supabase.", true);
             return;
           }
 
@@ -363,6 +386,23 @@ import "../styles/global.css";
           uploadForm.reset();
           await loadGallery();
         });
+
+        try {
+          const { data, error } = await withTimeout(
+            supabase.auth.getSession(),
+            "No se pudo verificar la sesion actual. Intenta ingresar de nuevo.",
+            8000,
+          );
+
+          if (error) {
+            setLoginStatus(error.message, true);
+          } else if (data.session) {
+            showAdmin();
+            await loadGallery();
+          }
+        } catch (error) {
+          setLoginStatus(error.message || "No se pudo verificar la sesion actual.", true);
+        }
       }
     </script>
   </body>

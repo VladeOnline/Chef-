@@ -26,14 +26,6 @@ const services = [
     descriptionEs:
       "Cumpleanos, bodas intimas, retiros, propuestas y reuniones familiares en Costa Rica.",
   },
-  {
-    title: "Tasting menu",
-    titleEs: "Menu degustacion",
-    description:
-      "Multi-course seasonal menus designed for guests who want a refined Costa Rican dining experience.",
-    descriptionEs:
-      "Menus de varios tiempos disenados para quienes buscan una experiencia gastronomica costarricense refinada.",
-  },
 ];
 
 const fallbackGallery = [
@@ -123,7 +115,7 @@ const reviews = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Private Chef Costa Rica | Villa Dinners and Events</title>
+    <title>Chef Privado CR | Villa Dinners and Events</title>
     <meta
       name="description"
       content="Private chef experiences in Costa Rica for villas, events, wellness retreats, and intimate celebrations."
@@ -138,11 +130,17 @@ const reviews = [
   <body class="font-sans text-ink antialiased">
     <header class="sticky top-0 z-50 border-b border-black/10 bg-cream/90 backdrop-blur">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="Private Chef Costa Rica home">
-          <span class="grid h-10 w-10 place-items-center rounded-lg bg-forest text-sm font-black text-white">CR</span>
+        <a href="#home" class="flex min-w-0 items-center gap-3 rounded-lg bg-forest px-2 py-1.5 pr-4 shadow-sm" aria-label="Chef Privado CR home">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[linear-gradient(135deg,#fbf8f1_0%,#f0c987_100%)] text-forest shadow-sm ring-1 ring-white/20" aria-hidden="true">
+            <svg class="h-9 w-9" viewBox="0 0 64 64" fill="none">
+              <rect x="10" y="10" width="44" height="44" rx="12" fill="rgba(255,255,255,0.22)" />
+              <path d="M18 45h28" stroke="#0f2f21" stroke-width="2.5" stroke-linecap="round" opacity="0.76" />
+              <text x="32" y="39" text-anchor="middle" fill="#0f2f21" font-family="Georgia, serif" font-size="27" font-weight="700">JN</text>
+              <circle cx="47" cy="17" r="4" fill="#b86f45" />
+            </svg>
+          </span>
           <span class="min-w-0">
-            <span class="block truncate text-sm font-extrabold tracking-wide">Private Chef Costa Rica</span>
-            <span class="block truncate text-xs font-medium text-ink/60" data-i18n="brandTagline">Villa dinners and private events</span>
+            <span class="block truncate font-serif text-2xl font-bold leading-none text-white sm:text-3xl">Chef Privado CR</span>
           </span>
         </a>
 
@@ -175,16 +173,20 @@ const reviews = [
     </header>
 
     <main id="home">
-      <section class="relative min-h-[calc(100vh-68px)] overflow-hidden">
+      <section class="relative h-[155vh] overflow-visible" data-scroll-hero>
+        <div class="sticky top-[65px] h-[calc(100vh-65px)] overflow-hidden">
         <img
-          class="absolute inset-0 h-full w-full object-cover"
+          class="scroll-hero-image absolute inset-0 h-full w-full object-cover"
           src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=2200&q=85"
           alt="Private chef preparing food in a bright kitchen"
+          data-scroll-hero-image
         />
-        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent"></div>
+        <div class="scroll-hero-overlay absolute inset-0 bg-[linear-gradient(90deg,rgba(7,31,21,0.86),rgba(16,55,38,0.72),rgba(18,64,43,0.46))]" data-scroll-hero-overlay></div>
+        <div class="scroll-hero-wash absolute inset-0 bg-cream opacity-0" data-scroll-hero-wash></div>
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-cream"></div>
         <div class="relative mx-auto flex min-h-[calc(100vh-68px)] max-w-7xl items-center px-4 pb-20 pt-16 sm:px-6 lg:px-8">
-          <div class="max-w-3xl text-white">
-            <p class="mb-4 text-sm font-extrabold uppercase tracking-[0.18em] text-white/80" data-i18n="heroKicker">
+          <div class="scroll-hero-content max-w-3xl text-white" data-scroll-hero-content>
+            <p class="mb-4 inline bg-leaf/80 px-1.5 text-sm font-extrabold uppercase tracking-[0.18em] text-white" data-i18n="heroKicker">
               Private culinary experiences in Costa Rica
             </p>
             <h1 class="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-7xl" data-i18n="heroTitle">
@@ -203,25 +205,29 @@ const reviews = [
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       <section id="services" class="section-pad bg-cream">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+          <div class="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
             <div>
               <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="servicesKicker">Services</p>
-              <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="servicesTitle">
+              <h2 class="mt-3 max-w-2xl font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="servicesTitle">
                 Built around the way you want to gather.
               </h2>
             </div>
-            <p class="max-w-2xl text-lg leading-8 text-ink/70" data-i18n="servicesCopy">
+            <p class="max-w-2xl text-lg leading-8 text-ink/70 lg:pt-12" data-i18n="servicesCopy">
               From Tamarindo to Nosara, Santa Teresa, Manuel Antonio, La Fortuna, San Jose, and beyond, each menu is planned around your location, schedule, tastes, and guests.
             </p>
           </div>
 
-          <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div class="mt-12 grid gap-5 md:grid-cols-3">
             {services.map((service, index) => (
-              <article class="rounded-lg border border-black/10 bg-white p-6 shadow-sm">
+              <article
+                class="reveal-card rounded-lg border border-black/10 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:border-forest/25 hover:shadow-xl hover:shadow-forest/10"
+                style={`--reveal-delay: ${index * 220}ms`}
+              >
                 <span class="text-sm font-black text-clay">0{index + 1}</span>
                 <h3 class="mt-4 text-2xl font-extrabold text-forest" data-en={service.title} data-es={service.titleEs}>
                   {service.title}
@@ -246,14 +252,14 @@ const reviews = [
           <div class="flex flex-col justify-center">
             <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="chefKicker">About the chef</p>
             <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="chefTitle">
-              A Costa Rica private chef experience with local flavor and calm service.
+              Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.
             </h2>
             <p class="mt-5 text-lg leading-8 text-ink/70" data-i18n="chefCopy">
-              Every booking starts with a conversation: where you are staying, what you love to eat, what guests need, and what kind of atmosphere you want. The result is a menu that feels personal without making hosting complicated.
+              I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.
             </p>
             <div class="mt-8 grid gap-4">
               {chefHighlights.map((item) => (
-                <article class="rounded-lg bg-cream p-5">
+                <article class="reveal-card rounded-lg bg-cream p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-forest/10">
                   <h3 class="font-extrabold text-forest" data-en={item.title} data-es={item.titleEs}>{item.title}</h3>
                   <p class="mt-2 leading-7 text-ink/70" data-en={item.copy} data-es={item.copyEs}>{item.copy}</p>
                 </article>
@@ -279,7 +285,7 @@ const reviews = [
             <div class="relative overflow-hidden rounded-lg">
               <div class="flex gap-5 transition-transform duration-700 ease-out" data-public-gallery>
                 {gallery.map((image) => (
-                  <figure class="min-w-full rounded-lg bg-white p-3 shadow-sm md:min-w-[calc(50%_-_0.625rem)] lg:min-w-[calc(33.333%_-_0.875rem)]">
+                  <figure class="reveal-card min-w-full rounded-lg bg-white p-3 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10 md:min-w-[calc(50%_-_0.625rem)] lg:min-w-[calc(33.333%_-_0.875rem)]">
                     <img
                       class="h-80 w-full rounded-md object-cover"
                       src={image.src}
@@ -313,7 +319,7 @@ const reviews = [
         </div>
       </section>
 
-      <section id="reviews" class="section-pad bg-[#eef2e6]">
+      <section id="reviews" class="section-pad bg-[#edf3ea]">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
@@ -324,15 +330,26 @@ const reviews = [
               <p class="mt-5 leading-7 text-ink/70" data-i18n="reviewsCopy">
                 Guests can leave a review and tell us their favorite part of the evening.
               </p>
+              <a
+                href="#leave-review"
+                class="mt-7 inline-flex rounded-lg bg-forest px-5 py-3 text-sm font-extrabold text-white transition hover:bg-ink"
+                data-i18n="reviewsButton"
+              >
+                Leave a review
+              </a>
             </div>
 
-            <div class="grid gap-5">
+            <div>
+              <div class="review-marquee relative h-[360px] overflow-y-auto rounded-lg pr-2" data-review-marquee>
+                <div class="grid gap-5" data-review-track>
               {reviews.map((review) => (
                 <article class="rounded-lg border border-black/10 bg-white p-6 shadow-sm">
                   <p class="text-lg leading-8 text-ink/80" data-en={`"${review.quote}"`} data-es={`"${review.quoteEs}"`}>"{review.quote}"</p>
                   <p class="mt-4 text-sm font-extrabold text-forest">{review.author} / {review.location}</p>
                 </article>
               ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -350,11 +367,17 @@ const reviews = [
             </p>
 
             <div class="mt-8 grid gap-3 text-sm font-semibold text-white/90">
-              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 hover:bg-white hover:text-forest" href="https://wa.me/50600000000" target="_blank" rel="noreferrer">
-                WhatsApp: +506 0000 0000
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://wa.me/50686584625" target="_blank" rel="noreferrer">
+                WhatsApp: +506 8658 4625
               </a>
-              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 hover:bg-white hover:text-forest" href="mailto:reservations@privatechefcr.com">
-                reservations@privatechefcr.com
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="tel:+50686584625">
+                <span data-i18n="phoneLabel">Call the chef</span>: +506 8658 4625
+              </a>
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://www.instagram.com/jose.nunezflores.3?igsi=dGRkdnczenU1YnN3" target="_blank" rel="noreferrer">
+                Instagram: @jose.nunezflores.3
+              </a>
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://www.facebook.com/share/1Dn4Xq1AdB/" target="_blank" rel="noreferrer">
+                Facebook
               </a>
               <span class="rounded-lg border border-white/15 bg-white/10 px-4 py-3" data-i18n="areas">
                 Serving villas, homes, and private venues across Costa Rica.
@@ -382,7 +405,7 @@ const reviews = [
               </div>
             </form>
 
-            <form class="rounded-lg border border-black/10 bg-white p-6 shadow-sm sm:p-8" data-review-form>
+            <form id="leave-review" class="scroll-mt-24 rounded-lg border border-black/10 bg-white p-6 shadow-sm sm:p-8" data-review-form>
               <h3 class="text-2xl font-extrabold text-forest" data-i18n="reviewFormTitle">Leave a review</h3>
               <div class="mt-5 grid gap-4">
                 <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="name" type="text" placeholder="Your name" data-placeholder-en="Your name" data-placeholder-es="Tu nombre" required />
@@ -398,12 +421,126 @@ const reviews = [
       </section>
     </main>
 
-    <footer class="border-t border-black/10 bg-white py-8">
-      <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm font-semibold text-ink/65 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <p>Private Chef Costa Rica</p>
-        <p data-i18n="footerText">Private villa dinners, events, wellness menus, and guest reviews.</p>
+    <footer class="border-t border-black/10 bg-forest py-10 text-white">
+      <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr_0.8fr] lg:px-8">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg border border-white/15 bg-[linear-gradient(135deg,#fbf8f1_0%,#f0b36d_100%)] text-forest" aria-hidden="true">
+              <svg class="h-10 w-10" viewBox="0 0 64 64" fill="none">
+                <rect x="9" y="9" width="46" height="46" rx="13" fill="rgba(15,47,33,0.08)" />
+                <path d="M18 46h28" stroke="#0f2f21" stroke-width="2.5" stroke-linecap="round" opacity="0.82" />
+                <text x="32" y="39" text-anchor="middle" fill="#0f2f21" font-family="Georgia, serif" font-size="27" font-weight="700">JN</text>
+                <circle cx="47" cy="17" r="4" fill="#b86f45" />
+              </svg>
+            </span>
+            <p class="font-serif text-3xl font-bold">Chef Privado CR</p>
+          </div>
+          <p class="mt-3 max-w-xl text-sm font-semibold leading-6 text-white/72" data-i18n="footerText">
+            Private villa dinners, events, chef service, and guest reviews.
+          </p>
+          <p class="mt-5 text-sm font-semibold text-white/65" data-i18n="footerRights">All rights reserved.</p>
+          <div class="mt-4 flex flex-wrap items-center gap-3 text-sm font-semibold text-white/65">
+            <span>
+              <span data-i18n="footerCreator">Page created by</span> <span class="text-white">Vladimir Rosales</span>
+            </span>
+            <a
+              class="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-white transition hover:bg-white hover:text-forest"
+              href="https://github.com/VladeOnline"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub Vladimir Rosales"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.9c-2.78.62-3.37-1.22-3.37-1.22-.45-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.29 9.29 0 0 1 12 6.97c.85 0 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.82c0 .27.18.59.69.49A10.18 10.18 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z" />
+              </svg>
+              GitHub
+            </a>
+            <a class="text-white underline decoration-white/30 underline-offset-4 transition hover:decoration-white" href="mailto:vladros9871@gmail.com">
+              vladros9871@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-white/60" data-i18n="footerContact">
+            Chef contact
+          </p>
+          <div class="grid gap-3 text-sm font-bold">
+            <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-white transition hover:bg-white hover:text-forest" href="https://wa.me/50686584625" target="_blank" rel="noreferrer">
+              WhatsApp: +506 8658 4625
+            </a>
+            <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-white transition hover:bg-white hover:text-forest" href="tel:+50686584625">
+              <span data-i18n="footerCall">Call directly</span>
+            </a>
+            <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-white transition hover:bg-white hover:text-forest" href="#contact" data-i18n="footerReserve">
+              Request a date
+            </a>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4 md:items-end">
+          <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-white/60" data-i18n="footerFollow">
+            Follow the chef
+          </p>
+          <div class="flex flex-wrap gap-3 md:justify-end">
+            <a
+              class="rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white hover:text-forest"
+              href="https://www.instagram.com/jose.nunezflores.3?igsi=dGRkdnczenU1YnN3"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Instagram
+            </a>
+            <a
+              class="rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white hover:text-forest"
+              href="https://www.facebook.com/share/1Dn4Xq1AdB/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Facebook
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
+
+    <script is:inline>
+      (() => {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const revealCards = Array.from(document.querySelectorAll(".reveal-card"));
+
+        if (reduceMotion || revealCards.length === 0) return;
+
+        document.documentElement.classList.add("reveal-enabled");
+        revealCards.forEach((card) => card.classList.remove("is-visible"));
+
+        const showCard = (card) => {
+          card.classList.add("is-visible");
+        };
+
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            if ("IntersectionObserver" in window) {
+              const observer = new IntersectionObserver(
+                (entries) => {
+                  entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    showCard(entry.target);
+                    observer.unobserve(entry.target);
+                  });
+                },
+                { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+              );
+
+              revealCards.forEach((card) => observer.observe(card));
+              return;
+            }
+
+            revealCards.forEach(showCard);
+          });
+        });
+      })();
+    </script>
 
     <script>
       import { createClient } from "@supabase/supabase-js";
@@ -429,26 +566,34 @@ const reviews = [
           heroSecondary: "Read guest reviews",
           servicesKicker: "Services",
           servicesTitle: "Built around the way you want to gather.",
-          servicesCopy: "From private dinners and villa service to events and tasting menus, each experience is planned around your location, schedule, tastes, and guests.",
+          servicesCopy: "From private dinners and villa service to events and celebrations, each experience is planned around your location, schedule, tastes, and guests.",
           chefKicker: "About the chef",
-          chefTitle: "A Costa Rica private chef experience with local flavor and calm service.",
-          chefCopy: "Every booking starts with a conversation: where you are staying, what you love to eat, what guests need, and what kind of atmosphere you want. The result is a menu that feels personal without making hosting complicated.",
+          chefTitle: "Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.",
+          chefCopy: "I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.",
           galleryKicker: "Gallery",
           galleryTitle: "Tropical, elegant, and made for the table in front of you.",
           galleryCopy: "A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.",
           reviewsKicker: "Guest reviews",
           reviewsTitle: "Share what made the experience memorable.",
           reviewsCopy: "Guests can leave a review and tell us their favorite part of the evening.",
+          reviewsButton: "Leave a review",
           contactKicker: "Booking",
           contactTitle: "Tell us about your private chef experience.",
           contactCopy: "Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.",
+          phoneLabel: "Call the chef",
           areas: "Serving villas, homes, and private venues across Costa Rica.",
           location: "Location: Costa Rica",
           bookingFormTitle: "Request a date",
           bookingButton: "Send by WhatsApp",
           reviewFormTitle: "Leave a review",
           reviewButton: "Send review",
-          footerText: "Private villa dinners, events, wellness menus, and guest reviews.",
+          footerText: "Private villa dinners, events, chef service, and guest reviews.",
+          footerRights: "All rights reserved.",
+          footerCreator: "Page created by",
+          footerContact: "Chef contact",
+          footerCall: "Call directly",
+          footerReserve: "Request a date",
+          footerFollow: "Follow the chef",
         },
         es: {
           brandTagline: "Cenas en villa y eventos privados",
@@ -465,26 +610,34 @@ const reviews = [
           heroSecondary: "Leer resenas",
           servicesKicker: "Servicios",
           servicesTitle: "Disenado para la forma en que quieres reunir a tus invitados.",
-          servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y menus degustacion, cada experiencia se planea segun tu ubicacion, horario, gustos e invitados.",
+          servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea segun tu ubicacion, horario, gustos e invitados.",
           chefKicker: "Sobre el chef",
-          chefTitle: "Una experiencia de chef privado en Costa Rica con sabor local y servicio tranquilo.",
-          chefCopy: "Cada reserva empieza con una conversacion: donde te hospedas, que te gusta comer, que necesitan tus invitados y que ambiente quieres. El resultado es un menu personal sin complicar el evento.",
+          chefTitle: "Hola, me llamo Jose Luis, un costarricense amante de la cocina.",
+          chefCopy: "La cocina es mi pasion. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan calidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
           galleryKicker: "Galeria",
           galleryTitle: "Tropical, elegante y hecho para la mesa frente a ti.",
           galleryCopy: "Una muestra visual de cenas privadas, platos servidos, ingredientes frescos y hospitalidad relajada en Costa Rica.",
           reviewsKicker: "Resenas de clientes",
           reviewsTitle: "Comparte que hizo memorable la experiencia.",
           reviewsCopy: "Los clientes pueden dejar una resena y contar su parte favorita de la noche.",
+          reviewsButton: "Dejar una resena",
           contactKicker: "Reservas",
           contactTitle: "Cuentanos sobre tu experiencia de chef privado.",
           contactCopy: "Envia fecha, ubicacion, numero de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
+          phoneLabel: "Llamar al chef",
           areas: "Servicio para villas, casas y espacios privados en Costa Rica.",
           location: "Ubicacion: Costa Rica",
           bookingFormTitle: "Solicitar fecha",
           bookingButton: "Enviar por WhatsApp",
           reviewFormTitle: "Dejar una resena",
           reviewButton: "Enviar resena",
-          footerText: "Cenas privadas, eventos, menus wellness y resenas de clientes.",
+          footerText: "Cenas privadas, eventos, servicio de chef y resenas de clientes.",
+          footerRights: "Todos los derechos reservados.",
+          footerCreator: "Pagina creada por",
+          footerContact: "Contacto del chef",
+          footerCall: "Llamar directo",
+          footerReserve: "Solicitar fecha",
+          footerFollow: "Sigue al chef",
         },
       };
 
@@ -526,14 +679,16 @@ const reviews = [
 
       document.querySelector("[data-booking-form]")?.addEventListener("submit", (event) => {
         event.preventDefault();
-        const message = formToMessage(event.currentTarget, currentLang === "en" ? "Private chef booking request" : "Solicitud de chef privado");
-        window.open(`https://wa.me/50600000000?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+        const activeLang = document.documentElement.lang === "es" ? "es" : "en";
+        const message = formToMessage(event.currentTarget, activeLang === "en" ? "Private chef booking request" : "Solicitud de chef privado");
+        window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
 
       document.querySelector("[data-review-form]")?.addEventListener("submit", (event) => {
         event.preventDefault();
-        const message = formToMessage(event.currentTarget, currentLang === "en" ? "Guest review" : "Resena de cliente");
-        window.open(`https://wa.me/50600000000?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+        const activeLang = document.documentElement.lang === "es" ? "es" : "en";
+        const message = formToMessage(event.currentTarget, activeLang === "en" ? "Guest review" : "Resena de cliente");
+        window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
 
       const galleryTrack = document.querySelector("[data-public-gallery]");
@@ -634,6 +789,63 @@ const reviews = [
         restartGalleryAutoplay();
       });
 
+      const reviewMarquee = document.querySelector("[data-review-marquee]");
+      let reviewScrollTimer;
+      let reviewPauseTimer;
+
+      function startReviewMarquee() {
+        if (!reviewMarquee || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        window.clearInterval(reviewScrollTimer);
+        reviewScrollTimer = window.setInterval(() => {
+          const maxScroll = reviewMarquee.scrollHeight - reviewMarquee.clientHeight;
+          if (maxScroll <= 0) return;
+
+          if (reviewMarquee.scrollTop >= maxScroll - 1) {
+            reviewMarquee.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+
+          reviewMarquee.scrollTop += 1;
+        }, 36);
+      }
+
+      function pauseReviewMarquee() {
+        window.clearInterval(reviewScrollTimer);
+        window.clearTimeout(reviewPauseTimer);
+        reviewPauseTimer = window.setTimeout(startReviewMarquee, 2200);
+      }
+
+      reviewMarquee?.addEventListener("wheel", pauseReviewMarquee, { passive: true });
+      reviewMarquee?.addEventListener("touchstart", pauseReviewMarquee, { passive: true });
+      reviewMarquee?.addEventListener("mouseenter", pauseReviewMarquee);
+      reviewMarquee?.addEventListener("mouseleave", startReviewMarquee);
+      startReviewMarquee();
+
+      const revealCards = document.querySelectorAll(".reveal-card");
+
+      if (revealCards.length > 0 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("reveal-enabled");
+
+        if ("IntersectionObserver" in window) {
+          window.requestAnimationFrame(() => {
+            const revealObserver = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting) return;
+                  entry.target.classList.add("is-visible");
+                  revealObserver.unobserve(entry.target);
+                });
+              },
+              { threshold: 0.28, rootMargin: "0px 0px -16% 0px" },
+            );
+
+            revealCards.forEach((card) => revealObserver.observe(card));
+          });
+        } else {
+          revealCards.forEach((card) => card.classList.add("is-visible"));
+        }
+      }
+
       async function loadPublishedGallery() {
         const grid = document.querySelector("[data-public-gallery]");
         const status = document.querySelector("[data-gallery-status]");
@@ -677,6 +889,158 @@ const reviews = [
       }
 
       loadPublishedGallery();
+    </script>
+    <script is:inline>
+      (() => {
+        const translations = {
+          en: {
+            brandTagline: "Villa dinners and private events",
+            navServices: "Services",
+            navChef: "About",
+            navGallery: "Gallery",
+            navReviews: "Reviews",
+            navContact: "Contact",
+            bookCta: "Book",
+            heroKicker: "Private culinary experiences in Costa Rica",
+            heroTitle: "A private chef experience for your villa, retreat, or celebration.",
+            heroCopy: "Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.",
+            heroPrimary: "Request availability",
+            heroSecondary: "Read guest reviews",
+            servicesKicker: "Services",
+            servicesTitle: "Built around the way you want to gather.",
+            servicesCopy: "From private dinners and villa service to events and celebrations, each experience is planned around your location, schedule, tastes, and guests.",
+            chefKicker: "About the chef",
+            chefTitle: "Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.",
+            chefCopy: "I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.",
+            galleryKicker: "Gallery",
+            galleryTitle: "Tropical, elegant, and made for the table in front of you.",
+            galleryCopy: "A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.",
+            reviewsKicker: "Guest reviews",
+            reviewsTitle: "Share what made the experience memorable.",
+            reviewsCopy: "Guests can leave a review and tell us their favorite part of the evening.",
+            reviewsButton: "Leave a review",
+            contactKicker: "Booking",
+            contactTitle: "Tell us about your private chef experience.",
+            contactCopy: "Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.",
+            phoneLabel: "Call the chef",
+            areas: "Serving villas, homes, and private venues across Costa Rica.",
+            location: "Location: Costa Rica",
+            bookingFormTitle: "Request a date",
+            bookingButton: "Send by WhatsApp",
+            reviewFormTitle: "Leave a review",
+            reviewButton: "Send review",
+            footerText: "Private villa dinners, events, chef service, and guest reviews.",
+            footerRights: "All rights reserved.",
+            footerCreator: "Page created by",
+            footerContact: "Chef contact",
+            footerCall: "Call directly",
+            footerReserve: "Request a date",
+            footerFollow: "Follow the chef",
+          },
+          es: {
+            brandTagline: "Cenas en villa y eventos privados",
+            navServices: "Servicios",
+            navChef: "Chef",
+            navGallery: "Galeria",
+            navReviews: "Resenas",
+            navContact: "Contacto",
+            bookCta: "Reservar",
+            heroKicker: "Experiencias culinarias privadas en Costa Rica",
+            heroTitle: "Una experiencia de chef privado para tu villa, retiro o celebracion.",
+            heroCopy: "Ingredientes locales frescos, menus personalizados y servicio cuidado para comidas memorables en Costa Rica.",
+            heroPrimary: "Solicitar disponibilidad",
+            heroSecondary: "Leer resenas",
+            servicesKicker: "Servicios",
+            servicesTitle: "Disenado para la forma en que quieres reunir a tus invitados.",
+            servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea segun tu ubicacion, horario, gustos e invitados.",
+            chefKicker: "Sobre el chef",
+            chefTitle: "Hola, me llamo Jose Luis, un costarricense amante de la cocina.",
+            chefCopy: "La cocina es mi pasion. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan calidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
+            galleryKicker: "Galeria",
+            galleryTitle: "Tropical, elegante y hecho para la mesa frente a ti.",
+            galleryCopy: "Una muestra visual de cenas privadas, platos servidos, ingredientes frescos y hospitalidad relajada en Costa Rica.",
+            reviewsKicker: "Resenas de clientes",
+            reviewsTitle: "Comparte que hizo memorable la experiencia.",
+            reviewsCopy: "Los clientes pueden dejar una resena y contar su parte favorita de la noche.",
+            reviewsButton: "Dejar una resena",
+            contactKicker: "Reservas",
+            contactTitle: "Cuentanos sobre tu experiencia de chef privado.",
+            contactCopy: "Envia fecha, ubicacion, numero de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
+            phoneLabel: "Llamar al chef",
+            areas: "Servicio para villas, casas y espacios privados en Costa Rica.",
+            location: "Ubicacion: Costa Rica",
+            bookingFormTitle: "Solicitar fecha",
+            bookingButton: "Enviar por WhatsApp",
+            reviewFormTitle: "Dejar una resena",
+            reviewButton: "Enviar resena",
+            footerText: "Cenas privadas, eventos, servicio de chef y resenas de clientes.",
+            footerRights: "Todos los derechos reservados.",
+            footerCreator: "Pagina creada por",
+            footerContact: "Contacto del chef",
+            footerCall: "Llamar directo",
+            footerReserve: "Solicitar fecha",
+            footerFollow: "Sigue al chef",
+          },
+        };
+
+        const toggle = document.querySelector("[data-lang-toggle]");
+        let currentLang = localStorage.getItem("chef-language") || "en";
+
+        function setLanguage(lang) {
+          currentLang = lang;
+          localStorage.setItem("chef-language", lang);
+          document.documentElement.lang = lang;
+
+          document.querySelectorAll("[data-i18n]").forEach((node) => {
+            const key = node.getAttribute("data-i18n");
+            if (key && translations[lang][key]) node.textContent = translations[lang][key];
+          });
+
+          document.querySelectorAll("[data-en][data-es]").forEach((node) => {
+            const text = node.getAttribute(lang === "en" ? "data-en" : "data-es");
+            if (text) node.textContent = text;
+          });
+
+          document.querySelectorAll("[data-placeholder-en][data-placeholder-es]").forEach((node) => {
+            const text = node.getAttribute(lang === "en" ? "data-placeholder-en" : "data-placeholder-es");
+            if (text) node.setAttribute("placeholder", text);
+          });
+
+          if (toggle) toggle.textContent = lang === "en" ? "ES" : "EN";
+        }
+
+        setLanguage(currentLang);
+        toggle?.addEventListener("click", () => setLanguage(currentLang === "en" ? "es" : "en"));
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const hero = document.querySelector("[data-scroll-hero]");
+        const image = document.querySelector("[data-scroll-hero-image]");
+
+        if (!hero || !image) return;
+
+        function clamp(value, min, max) {
+          return Math.min(Math.max(value, min), max);
+        }
+
+        function updateHeroEffect() {
+          const progress = clamp(window.scrollY / 720, 0, 1);
+
+          root.style.setProperty("--hero-scale", String(1 + progress * 0.1));
+          root.style.setProperty("--hero-blur", "0px");
+          root.style.setProperty("--hero-image-opacity", String(1 - progress * 0.08));
+          root.style.setProperty("--hero-content-opacity", String(1 - progress * 0.36));
+          root.style.setProperty("--hero-content-y", `${progress * -18}px`);
+          root.style.setProperty("--hero-overlay-opacity", String(0.88 + progress * 0.06));
+          root.style.setProperty("--hero-wash-opacity", String(progress * 0.1));
+        }
+
+        updateHeroEffect();
+        window.addEventListener("scroll", updateHeroEffect, { passive: true });
+        window.addEventListener("resize", updateHeroEffect);
+      })();
     </script>
   </body>
 </html>

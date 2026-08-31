@@ -13,7 +13,7 @@ body {
 }
 
 ::selection {
-  background: #1f4d3a;
+  background: #164832;
   color: #ffffff;
 }
 
@@ -23,4 +23,128 @@ body {
 
 .text-balance {
   text-wrap: balance;
+}
+
+.scroll-hero-image,
+.scroll-hero-content,
+.scroll-hero-overlay,
+.scroll-hero-wash {
+  will-change: transform, filter, opacity;
+}
+
+.scroll-hero-image {
+  filter: none;
+  opacity: var(--hero-image-opacity, 1);
+  transform: scale(var(--hero-scale, 1));
+}
+
+.scroll-hero-content {
+  opacity: var(--hero-content-opacity, 1);
+  transform: translateY(var(--hero-content-y, 0));
+}
+
+.scroll-hero-overlay {
+  opacity: var(--hero-overlay-opacity, 0.72);
+}
+
+.scroll-hero-wash {
+  opacity: var(--hero-wash-opacity, 0);
+}
+
+.review-marquee {
+  scrollbar-width: thin;
+  scrollbar-color: #0f2f21 rgba(15, 47, 33, 0.12);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+}
+
+.review-marquee::-webkit-scrollbar {
+  width: 8px;
+}
+
+.review-marquee::-webkit-scrollbar-track {
+  background: rgba(15, 47, 33, 0.1);
+  border-radius: 999px;
+}
+
+.review-marquee::-webkit-scrollbar-thumb {
+  background: #0f2f21;
+  border-radius: 999px;
+}
+
+.reveal-card {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-enabled .reveal-card {
+  opacity: 0;
+  transform: translateX(72px) scale(0.98);
+}
+
+.reveal-enabled .reveal-card.is-visible {
+  animation: card-reveal 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes card-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(72px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-enabled .reveal-card,
+  .reveal-enabled .reveal-card.is-visible {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-image-scroll {
+  from {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    filter: blur(24px);
+    opacity: 0.68;
+    transform: scale(1.34);
+  }
+}
+
+@keyframes hero-content-scroll {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0.1;
+    transform: translateY(-70px);
+  }
+}
+
+@keyframes hero-overlay-scroll {
+  from {
+    opacity: 0.72;
+  }
+  to {
+    opacity: 0.96;
+  }
+}
+
+@keyframes hero-wash-scroll {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.42;
+  }
 }
