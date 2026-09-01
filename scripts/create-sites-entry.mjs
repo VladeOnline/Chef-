@@ -1,4 +1,5 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, rm, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
 const entry = `export default {
   async fetch(request, env) {
@@ -16,3 +17,15 @@ const entry = `export default {
 
 await mkdir("dist/server", { recursive: true });
 await writeFile("dist/server/index.js", entry);
+
+await rm("dist/client", { recursive: true, force: true });
+await mkdir("dist/client", { recursive: true });
+
+const publicEntries = await readdir("dist");
+const excluded = new Set(["client", "server"]);
+
+await Promise.all(
+  publicEntries
+    .filter((name) => !excluded.has(name))
+    .map((name) => cp(join("dist", name), join("dist/client", name), { recursive: true })),
+);
