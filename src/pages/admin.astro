@@ -88,6 +88,27 @@ import "../styles/global.css";
 
           <p class="mt-4 min-h-6 text-sm font-semibold text-ink/70" data-status></p>
           <div class="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3" data-admin-gallery></div>
+
+          <div class="mt-10 border-t border-black/10 pt-8">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 class="text-2xl font-extrabold text-forest">Resenas de clientes</h2>
+                <p class="mt-2 text-sm leading-6 text-ink/65">
+                  Funcion lista para eliminar resenas cuando conectemos la tabla en Supabase.
+                </p>
+              </div>
+              <button
+                class="rounded-lg border border-black/10 px-4 py-2 text-sm font-bold text-forest hover:border-forest"
+                type="button"
+                data-refresh-reviews
+              >
+                Actualizar resenas
+              </button>
+            </div>
+
+            <p class="mt-4 min-h-6 text-sm font-semibold text-ink/70" data-review-status></p>
+            <div class="mt-6 grid gap-4" data-admin-reviews></div>
+          </div>
         </section>
       </section>
     </main>
@@ -106,6 +127,23 @@ import "../styles/global.css";
       </article>
     </template>
 
+    <template data-review-template>
+      <article class="rounded-lg border border-black/10 bg-white p-4 shadow-sm">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p class="text-lg font-extrabold text-forest" data-review-name></p>
+            <p class="mt-1 text-sm font-semibold tracking-[0.12em] text-clay" data-review-stars></p>
+          </div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-ink/45" data-review-date></p>
+        </div>
+        <p class="mt-4 text-sm leading-6 text-ink/75" data-review-text></p>
+        <p class="mt-3 rounded-lg bg-cream p-3 text-sm font-semibold leading-6 text-ink/70" data-review-favorite hidden></p>
+        <button class="mt-4 rounded-lg border border-red-200 px-4 py-2 text-sm font-bold text-red-700 hover:bg-red-50" type="button" data-delete-review>
+          Eliminar resena
+        </button>
+      </article>
+    </template>
+
     <div
       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
       data-delete-modal
@@ -114,11 +152,11 @@ import "../styles/global.css";
       aria-labelledby="delete-modal-title"
     >
       <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-2xl">
-        <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay">Eliminar foto</p>
+        <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-delete-modal-kicker>Eliminar foto</p>
         <h2 id="delete-modal-title" class="mt-3 font-serif text-3xl font-bold text-forest">
           Confirmar eliminacion
         </h2>
-        <p class="mt-3 leading-7 text-ink/70">
+        <p class="mt-3 leading-7 text-ink/70" data-delete-modal-copy>
           Esta foto se quitara de la galeria publica y no podra recuperarse desde este panel.
         </p>
         <p class="mt-4 rounded-lg bg-cream p-3 text-sm font-semibold leading-6 text-ink/75" data-delete-modal-label hidden></p>
@@ -140,6 +178,7 @@ import "../styles/global.css";
       const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
       const galleryBucket = import.meta.env.PUBLIC_SUPABASE_GALLERY_BUCKET || "chef-gallery";
       const galleryTable = import.meta.env.PUBLIC_SUPABASE_GALLERY_TABLE || "gallery_images";
+      const reviewsTable = import.meta.env.PUBLIC_SUPABASE_REVIEWS_TABLE || "chef_reviews";
 
       const configWarning = document.querySelector("[data-config-warning]");
       const loginForm = document.querySelector("[data-login-form]");
@@ -149,8 +188,14 @@ import "../styles/global.css";
       const logoutButton = document.querySelector("[data-logout]");
       const statusNode = document.querySelector("[data-status]");
       const galleryNode = document.querySelector("[data-admin-gallery]");
+      const reviewStatusNode = document.querySelector("[data-review-status]");
+      const reviewsNode = document.querySelector("[data-admin-reviews]");
+      const refreshReviewsButton = document.querySelector("[data-refresh-reviews]");
       const template = document.querySelector("[data-photo-template]");
+      const reviewTemplate = document.querySelector("[data-review-template]");
       const deleteModal = document.querySelector("[data-delete-modal]");
+      const deleteModalKicker = document.querySelector("[data-delete-modal-kicker]");
+      const deleteModalCopy = document.querySelector("[data-delete-modal-copy]");
       const deleteModalLabel = document.querySelector("[data-delete-modal-label]");
       const cancelDeleteButton = document.querySelector("[data-cancel-delete]");
       const confirmDeleteButton = document.querySelector("[data-confirm-delete]");
@@ -168,6 +213,12 @@ import "../styles/global.css";
         if (!loginStatusNode) return;
         loginStatusNode.textContent = message;
         loginStatusNode.className = `min-h-6 text-sm font-semibold ${isError ? "text-red-700" : "text-ink/70"}`;
+      }
+
+      function setReviewStatus(message, isError = false) {
+        if (!reviewStatusNode) return;
+        reviewStatusNode.textContent = message;
+        reviewStatusNode.className = `mt-4 min-h-6 text-sm font-semibold ${isError ? "text-red-700" : "text-ink/70"}`;
       }
 
       function withTimeout(promise, message, ms = 15000) {
@@ -188,13 +239,44 @@ import "../styles/global.css";
         return cleanName || "gallery-photo.jpg";
       }
 
-      function askDeleteConfirmation(photo) {
+      function getReviewName(review) {
+        return review.name || review.author || "Cliente";
+      }
+
+      function getReviewText(review) {
+        return review.review || review.quote || "Sin resena escrita";
+      }
+
+      function renderStars(rating) {
+        const normalizedRating = Math.max(1, Math.min(5, Number(rating) || 5));
+        return "★".repeat(normalizedRating) + "☆".repeat(5 - normalizedRating);
+      }
+
+      function formatDate(value) {
+        if (!value) return "";
+        return new Intl.DateTimeFormat("es-CR", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }).format(new Date(value));
+      }
+
+      function askDeleteConfirmation(options = {}) {
         return new Promise((resolve) => {
           pendingDeleteResolve = resolve;
 
+          if (deleteModalKicker) {
+            deleteModalKicker.textContent = options.kicker || "Eliminar";
+          }
+
+          if (deleteModalCopy) {
+            deleteModalCopy.textContent =
+              options.copy || "Este contenido se quitara de la pagina publica y no podra recuperarse desde este panel.";
+          }
+
           if (deleteModalLabel) {
-            if (photo.alt_text) {
-              deleteModalLabel.textContent = photo.alt_text;
+            if (options.label) {
+              deleteModalLabel.textContent = options.label;
               deleteModalLabel.hidden = false;
             } else {
               deleteModalLabel.hidden = true;
@@ -266,8 +348,63 @@ import "../styles/global.css";
         setStatus(`${data.length} foto${data.length === 1 ? "" : "s"} publicada${data.length === 1 ? "" : "s"}.`);
       }
 
+      async function loadReviews() {
+        if (!reviewsNode || !reviewTemplate) return;
+
+        reviewsNode.innerHTML = "";
+        setReviewStatus("Cargando resenas...");
+
+        const { data, error } = await supabase
+          .from(reviewsTable)
+          .select("id, name, author, rating, favorite_part, favorite, review, quote, created_at")
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          setReviewStatus(
+            `Aun no se pueden cargar resenas. Cuando creemos la tabla "${reviewsTable}" en Supabase, este panel quedara funcionando. ${error.message}`,
+            true,
+          );
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          setReviewStatus("Todavia no hay resenas publicadas.");
+          return;
+        }
+
+        data.forEach((review) => {
+          const node = reviewTemplate.content.cloneNode(true);
+          const name = node.querySelector("[data-review-name]");
+          const stars = node.querySelector("[data-review-stars]");
+          const date = node.querySelector("[data-review-date]");
+          const text = node.querySelector("[data-review-text]");
+          const favorite = node.querySelector("[data-review-favorite]");
+          const deleteButton = node.querySelector("[data-delete-review]");
+          const favoriteText = review.favorite_part || review.favorite || "";
+
+          name.textContent = getReviewName(review);
+          stars.textContent = renderStars(review.rating);
+          date.textContent = formatDate(review.created_at);
+          text.textContent = getReviewText(review);
+
+          if (favoriteText) {
+            favorite.textContent = `Parte favorita: ${favoriteText}`;
+            favorite.hidden = false;
+          }
+
+          deleteButton.addEventListener("click", async () => deleteReview(review));
+          reviewsNode.appendChild(node);
+        });
+
+        setReviewStatus(`${data.length} resena${data.length === 1 ? "" : "s"} publicada${data.length === 1 ? "" : "s"}.`);
+      }
+
       async function deletePhoto(photo) {
-        const confirmed = await askDeleteConfirmation(photo);
+        const confirmed = await askDeleteConfirmation({
+          kicker: "Eliminar foto",
+          copy: "Esta foto se quitara de la galeria publica y no podra recuperarse desde este panel.",
+          label: photo.alt_text || "",
+        });
         if (!confirmed) return;
 
         setStatus("Eliminando foto...");
@@ -289,8 +426,29 @@ import "../styles/global.css";
         await loadGallery();
       }
 
+      async function deleteReview(review) {
+        const reviewText = getReviewText(review);
+        const confirmed = await askDeleteConfirmation({
+          kicker: "Eliminar resena",
+          copy: "Esta resena se quitara de la pagina publica cuando la tabla de Supabase este conectada.",
+          label: `${getReviewName(review)}: ${reviewText.slice(0, 120)}${reviewText.length > 120 ? "..." : ""}`,
+        });
+        if (!confirmed) return;
+
+        setReviewStatus("Eliminando resena...");
+
+        const { error } = await supabase.from(reviewsTable).delete().eq("id", review.id);
+        if (error) {
+          setReviewStatus(error.message, true);
+          return;
+        }
+
+        await loadReviews();
+      }
+
       cancelDeleteButton?.addEventListener("click", () => closeDeleteModal(false));
       confirmDeleteButton?.addEventListener("click", () => closeDeleteModal(true));
+      refreshReviewsButton?.addEventListener("click", async () => loadReviews());
       deleteModal?.addEventListener("click", (event) => {
         if (event.target === deleteModal) closeDeleteModal(false);
       });
@@ -332,7 +490,7 @@ import "../styles/global.css";
           }
 
           showAdmin();
-          await loadGallery();
+          await Promise.all([loadGallery(), loadReviews()]);
         });
 
         logoutButton?.addEventListener("click", async () => {
@@ -398,7 +556,7 @@ import "../styles/global.css";
             setLoginStatus(error.message, true);
           } else if (data.session) {
             showAdmin();
-            await loadGallery();
+            await Promise.all([loadGallery(), loadReviews()]);
           }
         } catch (error) {
           setLoginStatus(error.message || "No se pudo verificar la sesion actual.", true);

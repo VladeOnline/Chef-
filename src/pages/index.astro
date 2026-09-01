@@ -90,6 +90,7 @@ const reviews = [
       "La cena se sintio especial y sin complicaciones. Cada plato tenia un toque local y el servicio fue calido, tranquilo y preciso.",
     author: "Megan L.",
     location: "Nosara",
+    rating: 5,
   },
   {
     quote:
@@ -98,6 +99,7 @@ const reviews = [
       "Nuestra parte favorita fue escuchar al chef explicar los ingredientes. Convirtio la cena en un recuerdo real de Costa Rica.",
     author: "Daniel R.",
     location: "Tamarindo",
+    rating: 5,
   },
   {
     quote:
@@ -106,8 +108,12 @@ const reviews = [
       "Presentacion hermosa, mariscos frescos y un menu que funciono para todo el grupo.",
     author: "Sofia M.",
     location: "Manuel Antonio",
+    rating: 5,
   },
 ];
+
+const renderStars = (rating = 5) =>
+  Array.from({ length: 5 }, (_, index) => (index < rating ? "★" : "☆")).join("");
 ---
 
 <!doctype html>
@@ -130,17 +136,18 @@ const reviews = [
   <body class="font-sans text-ink antialiased">
     <header class="sticky top-0 z-50 border-b border-black/10 bg-cream/90 backdrop-blur">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#home" class="flex min-w-0 items-center gap-3 rounded-lg bg-forest px-2 py-1.5 pr-4 shadow-sm" aria-label="Chef Privado CR home">
-          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[linear-gradient(135deg,#fbf8f1_0%,#f0c987_100%)] text-forest shadow-sm ring-1 ring-white/20" aria-hidden="true">
+        <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="Chef Privado CR home">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[linear-gradient(135deg,#0f2f21_0%,#1f5b3d_58%,#b86f45_100%)] text-cream shadow-sm ring-1 ring-black/10" aria-hidden="true">
             <svg class="h-9 w-9" viewBox="0 0 64 64" fill="none">
-              <rect x="10" y="10" width="44" height="44" rx="12" fill="rgba(255,255,255,0.22)" />
-              <path d="M18 45h28" stroke="#0f2f21" stroke-width="2.5" stroke-linecap="round" opacity="0.76" />
-              <text x="32" y="39" text-anchor="middle" fill="#0f2f21" font-family="Georgia, serif" font-size="27" font-weight="700">JN</text>
-              <circle cx="47" cy="17" r="4" fill="#b86f45" />
+              <rect x="9" y="9" width="46" height="46" rx="13" fill="rgba(251,248,241,0.1)" />
+              <path d="M18 46h28" stroke="#fbf8f1" stroke-width="2.5" stroke-linecap="round" opacity="0.86" />
+              <text x="32" y="39" text-anchor="middle" fill="#fbf8f1" font-family="Georgia, serif" font-size="27" font-weight="700">JN</text>
+              <circle cx="47" cy="17" r="4" fill="#f0b36d" />
             </svg>
           </span>
           <span class="min-w-0">
-            <span class="block truncate font-serif text-2xl font-bold leading-none text-white sm:text-3xl">Chef Privado CR</span>
+            <span class="block truncate text-sm font-extrabold tracking-wide">Chef Privado CR</span>
+            <span class="block truncate text-xs font-medium text-ink/60" data-i18n="brandTagline">Villa dinners and private events</span>
           </span>
         </a>
 
@@ -173,8 +180,8 @@ const reviews = [
     </header>
 
     <main id="home">
-      <section class="relative h-[155vh] overflow-visible" data-scroll-hero>
-        <div class="sticky top-[65px] h-[calc(100vh-65px)] overflow-hidden">
+      <section class="relative min-h-[calc(100vh-65px)] overflow-hidden" data-scroll-hero>
+        <div class="relative min-h-[calc(100vh-65px)] overflow-hidden">
         <img
           class="scroll-hero-image absolute inset-0 h-full w-full object-cover"
           src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=2200&q=85"
@@ -344,6 +351,9 @@ const reviews = [
                 <div class="grid gap-5" data-review-track>
               {reviews.map((review) => (
                 <article class="rounded-lg border border-black/10 bg-white p-6 shadow-sm">
+                  <p class="mb-3 text-xl tracking-[0.12em] text-[#c9823f]" aria-label={`${review.rating} out of 5 stars`}>
+                    {renderStars(review.rating)}
+                  </p>
                   <p class="text-lg leading-8 text-ink/80" data-en={`"${review.quote}"`} data-es={`"${review.quoteEs}"`}>"{review.quote}"</p>
                   <p class="mt-4 text-sm font-extrabold text-forest">{review.author} / {review.location}</p>
                 </article>
@@ -394,7 +404,7 @@ const reviews = [
               <div class="mt-5 grid gap-4">
                 <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="name" type="text" placeholder="Name" data-placeholder-en="Name" data-placeholder-es="Nombre" required />
                 <div class="grid gap-4 sm:grid-cols-2">
-                  <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="date" type="date" required />
+                  <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="date" type="date" data-booking-date required />
                   <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="guests" type="number" min="1" placeholder="Guests" data-placeholder-en="Guests" data-placeholder-es="Personas" required />
                 </div>
                 <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="location" type="text" placeholder="Location in Costa Rica" data-placeholder-en="Location in Costa Rica" data-placeholder-es="Ubicacion en Costa Rica" required />
@@ -409,6 +419,28 @@ const reviews = [
               <h3 class="text-2xl font-extrabold text-forest" data-i18n="reviewFormTitle">Leave a review</h3>
               <div class="mt-5 grid gap-4">
                 <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="name" type="text" placeholder="Your name" data-placeholder-en="Your name" data-placeholder-es="Tu nombre" required />
+                <label class="grid gap-2 text-sm font-bold text-ink/75">
+                  <span data-i18n="ratingLabel">Rating</span>
+                  <span class="rounded-lg border border-black/15 bg-white px-4 py-3 focus-within:border-forest">
+                    <input type="hidden" name="rating" value="5" data-rating-input required />
+                    <span class="flex flex-wrap items-center gap-3">
+                      <span class="flex items-center gap-1" data-star-rating role="radiogroup" aria-label="Rating">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            class="rating-star"
+                            type="button"
+                            data-rating-star={star}
+                            aria-label={`${star} star${star === 1 ? "" : "s"}`}
+                          >
+                            <span class="rating-star-base" aria-hidden="true">&#9734;</span>
+                            <span class="rating-star-fill" aria-hidden="true">&#9733;</span>
+                          </button>
+                        ))}
+                      </span>
+                      <span class="text-sm font-extrabold text-forest" data-rating-value>5/5</span>
+                    </span>
+                  </span>
+                </label>
                 <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="favorite" type="text" placeholder="Favorite part of the experience" data-placeholder-en="Favorite part of the experience" data-placeholder-es="Parte favorita de la experiencia" required />
                 <textarea class="min-h-32 rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="review" placeholder="Write your review" data-placeholder-en="Write your review" data-placeholder-es="Escribe tu resena" required></textarea>
                 <button class="rounded-lg bg-forest px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit" data-i18n="reviewButton">
@@ -586,6 +618,7 @@ const reviews = [
           bookingFormTitle: "Request a date",
           bookingButton: "Send by WhatsApp",
           reviewFormTitle: "Leave a review",
+          ratingLabel: "Rating",
           reviewButton: "Send review",
           footerText: "Private villa dinners, events, chef service, and guest reviews.",
           footerRights: "All rights reserved.",
@@ -630,6 +663,7 @@ const reviews = [
           bookingFormTitle: "Solicitar fecha",
           bookingButton: "Enviar por WhatsApp",
           reviewFormTitle: "Dejar una resena",
+          ratingLabel: "Calificacion",
           reviewButton: "Enviar resena",
           footerText: "Cenas privadas, eventos, servicio de chef y resenas de clientes.",
           footerRights: "Todos los derechos reservados.",
@@ -668,28 +702,200 @@ const reviews = [
 
       toggle?.addEventListener("click", () => setLanguage(currentLang === "en" ? "es" : "en"));
 
-      function formToMessage(form, title) {
+      function getFormValue(form, name) {
         const data = new FormData(form);
-        const lines = [title];
-        for (const [key, value] of data.entries()) {
-          if (String(value).trim()) lines.push(`${key}: ${value}`);
-        }
+        return String(data.get(name) || "").trim();
+      }
+
+      function formatDateForMessage(dateValue, lang) {
+        if (!dateValue) return lang === "es" ? "No indicada" : "Not provided";
+        const [year, month, day] = dateValue.split("-").map(Number);
+        const date = new Date(year, month - 1, day);
+
+        return new Intl.DateTimeFormat(lang === "es" ? "es-CR" : "en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }).format(date);
+      }
+
+      function bookingMessage(form, lang) {
+        const name = getFormValue(form, "name");
+        const date = getFormValue(form, "date");
+        const guests = getFormValue(form, "guests");
+        const location = getFormValue(form, "location");
+        const details = getFormValue(form, "details");
+
+        const lines =
+          lang === "es"
+            ? [
+                "Hola Jose Luis, quiero consultar disponibilidad para una experiencia de chef privado.",
+                "",
+                `Nombre: ${name}`,
+                `Fecha: ${formatDateForMessage(date, lang)}`,
+                `Cantidad de personas: ${guests}`,
+                `Ubicacion: ${location}`,
+                "",
+                "Detalles de la experiencia:",
+                details || "Sin detalles adicionales por ahora.",
+                "",
+                "Quedo atento/a a tu disponibilidad y propuesta. Gracias.",
+              ]
+            : [
+                "Hi Jose Luis, I would like to check availability for a private chef experience.",
+                "",
+                `Name: ${name}`,
+                `Date: ${formatDateForMessage(date, lang)}`,
+                `Guest count: ${guests}`,
+                `Location: ${location}`,
+                "",
+                "Experience details:",
+                details || "No extra details yet.",
+                "",
+                "I look forward to your availability and proposal. Thank you.",
+              ];
+
         return lines.join("\n");
       }
 
+      function reviewMessage(form, lang) {
+        const name = getFormValue(form, "name");
+        const rating = getFormValue(form, "rating");
+        const favorite = getFormValue(form, "favorite");
+        const review = getFormValue(form, "review");
+        const ratingNumber = Number(rating) || 5;
+        const fullStars = Math.floor(ratingNumber);
+        const hasHalfStar = ratingNumber % 1 !== 0;
+        const stars = `${"\u2605".repeat(fullStars)}${hasHalfStar ? "\u00BD" : ""}`;
+
+        const lines =
+          lang === "es"
+            ? [
+                "Hola Jose Luis, quiero dejar una resena de la experiencia.",
+                "",
+                `Nombre: ${name}`,
+                `Calificacion: ${stars} (${rating}/5)`,
+                `Parte favorita: ${favorite}`,
+                "",
+                "Resena:",
+                review,
+              ]
+            : [
+                "Hi Jose Luis, I would like to leave a review of the experience.",
+                "",
+                `Name: ${name}`,
+                `Rating: ${stars} (${rating}/5)`,
+                `Favorite part: ${favorite}`,
+                "",
+                "Review:",
+                review,
+              ];
+
+        return lines.join("\n");
+      }
+
+      const bookingDateInput = document.querySelector("[data-booking-date]");
+
+      function getTodayDateValue() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function setBookingDateLimit() {
+        if (!bookingDateInput) return;
+        const today = getTodayDateValue();
+        bookingDateInput.min = today;
+
+        if (bookingDateInput.value && bookingDateInput.value < today) {
+          bookingDateInput.value = "";
+        }
+      }
+
+      setBookingDateLimit();
+
+      bookingDateInput?.addEventListener("input", () => {
+        bookingDateInput.setCustomValidity("");
+      });
+
       document.querySelector("[data-booking-form]")?.addEventListener("submit", (event) => {
         event.preventDefault();
+        setBookingDateLimit();
+
+        if (bookingDateInput?.value && bookingDateInput.value < getTodayDateValue()) {
+          const activeLang = document.documentElement.lang === "es" ? "es" : "en";
+          bookingDateInput.setCustomValidity(
+            activeLang === "es"
+              ? "Selecciona una fecha de hoy en adelante."
+              : "Please select today or a future date.",
+          );
+          bookingDateInput.reportValidity();
+          return;
+        }
+
         const activeLang = document.documentElement.lang === "es" ? "es" : "en";
-        const message = formToMessage(event.currentTarget, activeLang === "en" ? "Private chef booking request" : "Solicitud de chef privado");
+        const message = bookingMessage(event.currentTarget, activeLang);
         window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
 
       document.querySelector("[data-review-form]")?.addEventListener("submit", (event) => {
         event.preventDefault();
         const activeLang = document.documentElement.lang === "es" ? "es" : "en";
-        const message = formToMessage(event.currentTarget, activeLang === "en" ? "Guest review" : "Resena de cliente");
+        const message = reviewMessage(event.currentTarget, activeLang);
         window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
+
+      const ratingRoot = document.querySelector("[data-star-rating]");
+      const ratingInput = document.querySelector("[data-rating-input]");
+      const ratingValue = document.querySelector("[data-rating-value]");
+      const ratingStars = Array.from(document.querySelectorAll("[data-rating-star]"));
+      let selectedRating = Number(ratingInput?.value || 5);
+
+      function paintRating(value) {
+        ratingStars.forEach((starButton, index) => {
+          const starNumber = index + 1;
+          const fill = Math.max(0, Math.min(1, value - (starNumber - 1)));
+          starButton.style.setProperty("--star-fill", `${fill * 100}%`);
+          starButton.setAttribute("aria-checked", fill > 0 ? "true" : "false");
+        });
+
+        if (ratingInput) ratingInput.value = String(value);
+        if (ratingValue) ratingValue.textContent = `${value}/5`;
+      }
+
+      function getRatingFromPointer(event, starButton) {
+        const starNumber = Number(starButton.dataset.ratingStar || 1);
+        const rect = starButton.getBoundingClientRect();
+        const isHalf = event.clientX - rect.left <= rect.width / 2;
+        return starNumber - (isHalf ? 0.5 : 0);
+      }
+
+      ratingStars.forEach((starButton) => {
+        starButton.addEventListener("pointermove", (event) => {
+          paintRating(getRatingFromPointer(event, starButton));
+        });
+
+        starButton.addEventListener("click", (event) => {
+          selectedRating = getRatingFromPointer(event, starButton);
+          paintRating(selectedRating);
+        });
+
+        starButton.addEventListener("keydown", (event) => {
+          if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+          event.preventDefault();
+          selectedRating = Math.max(0.5, Math.min(5, selectedRating + (event.key === "ArrowRight" ? 0.5 : -0.5)));
+          paintRating(selectedRating);
+        });
+      });
+
+      ratingRoot?.addEventListener("pointerleave", () => {
+        paintRating(selectedRating);
+      });
+
+      paintRating(selectedRating);
 
       const galleryTrack = document.querySelector("[data-public-gallery]");
       const galleryDots = document.querySelector("[data-gallery-dots]");
@@ -801,7 +1007,12 @@ const reviews = [
           if (maxScroll <= 0) return;
 
           if (reviewMarquee.scrollTop >= maxScroll - 1) {
-            reviewMarquee.scrollTo({ top: 0, behavior: "smooth" });
+            window.clearInterval(reviewScrollTimer);
+            window.clearTimeout(reviewPauseTimer);
+            reviewPauseTimer = window.setTimeout(() => {
+              reviewMarquee.scrollTo({ top: 0, behavior: "auto" });
+              window.setTimeout(startReviewMarquee, 900);
+            }, 2400);
             return;
           }
 
@@ -928,6 +1139,7 @@ const reviews = [
             bookingFormTitle: "Request a date",
             bookingButton: "Send by WhatsApp",
             reviewFormTitle: "Leave a review",
+            ratingLabel: "Rating",
             reviewButton: "Send review",
             footerText: "Private villa dinners, events, chef service, and guest reviews.",
             footerRights: "All rights reserved.",
@@ -972,6 +1184,7 @@ const reviews = [
             bookingFormTitle: "Solicitar fecha",
             bookingButton: "Enviar por WhatsApp",
             reviewFormTitle: "Dejar una resena",
+            ratingLabel: "Calificacion",
             reviewButton: "Enviar resena",
             footerText: "Cenas privadas, eventos, servicio de chef y resenas de clientes.",
             footerRights: "Todos los derechos reservados.",
@@ -1026,15 +1239,15 @@ const reviews = [
         }
 
         function updateHeroEffect() {
-          const progress = clamp(window.scrollY / 720, 0, 1);
+          const progress = clamp(window.scrollY / 360, 0, 1);
 
-          root.style.setProperty("--hero-scale", String(1 + progress * 0.1));
-          root.style.setProperty("--hero-blur", "0px");
-          root.style.setProperty("--hero-image-opacity", String(1 - progress * 0.08));
-          root.style.setProperty("--hero-content-opacity", String(1 - progress * 0.36));
-          root.style.setProperty("--hero-content-y", `${progress * -18}px`);
-          root.style.setProperty("--hero-overlay-opacity", String(0.88 + progress * 0.06));
-          root.style.setProperty("--hero-wash-opacity", String(progress * 0.1));
+          root.style.setProperty("--hero-scale", String(1 + progress * 0.07));
+          root.style.setProperty("--hero-blur", `${progress * 12}px`);
+          root.style.setProperty("--hero-image-opacity", String(1 - progress * 0.1));
+          root.style.setProperty("--hero-content-opacity", String(1 - progress * 0.48));
+          root.style.setProperty("--hero-content-y", `${progress * -24}px`);
+          root.style.setProperty("--hero-overlay-opacity", String(0.86 + progress * 0.08));
+          root.style.setProperty("--hero-wash-opacity", String(progress * 0.16));
         }
 
         updateHeroEffect();

@@ -33,7 +33,7 @@ body {
 }
 
 .scroll-hero-image {
-  filter: none;
+  filter: blur(var(--hero-blur, 0));
   opacity: var(--hero-image-opacity, 1);
   transform: scale(var(--hero-scale, 1));
 }
@@ -54,8 +54,8 @@ body {
 .review-marquee {
   scrollbar-width: thin;
   scrollbar-color: #0f2f21 rgba(15, 47, 33, 0.12);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 8%, black 96%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 8%, black 96%, transparent);
 }
 
 .review-marquee::-webkit-scrollbar {
@@ -70,6 +70,45 @@ body {
 .review-marquee::-webkit-scrollbar-thumb {
   background: #0f2f21;
   border-radius: 999px;
+}
+
+.rating-star {
+  --star-fill: 100%;
+  position: relative;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  background: transparent;
+  color: #c9823f;
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.rating-star:focus-visible {
+  outline: 2px solid #0f2f21;
+  outline-offset: 3px;
+  border-radius: 0.35rem;
+}
+
+.rating-star-base,
+.rating-star-fill {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.rating-star-base {
+  color: rgba(201, 130, 63, 0.28);
+}
+
+.rating-star-fill {
+  overflow: hidden;
+  color: #c9823f;
+  clip-path: inset(0 calc(100% - var(--star-fill)) 0 0);
+  text-shadow: 0 6px 18px rgba(201, 130, 63, 0.24);
 }
 
 .reveal-card {
