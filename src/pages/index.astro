@@ -884,15 +884,16 @@ const renderStars = (rating = 5) =>
 
       document.querySelector("[data-review-form]")?.addEventListener("submit", async (event) => {
         event.preventDefault();
+        const form = event.currentTarget;
         const activeLang = document.documentElement.lang === "es" ? "es" : "en";
-        const message = reviewMessage(event.currentTarget, activeLang);
+        const message = reviewMessage(form, activeLang);
 
         try {
           setReviewSubmitStatus(activeLang === "es" ? "Guardando resena..." : "Saving review...");
-          await saveReview(event.currentTarget);
+          await saveReview(form);
           setReviewSubmitStatus(activeLang === "es" ? "Resena guardada. Gracias." : "Review saved. Thank you.");
           await loadPublishedReviews();
-          event.currentTarget.reset();
+          form.reset();
           selectedRating = 5;
           paintRating(selectedRating);
         } catch (error) {
