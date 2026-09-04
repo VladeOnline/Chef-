@@ -6,13 +6,9 @@ create table if not exists public.gallery_images (
   storage_path text not null,
   alt_text text,
   sort_order integer not null default 100,
-  object_position text not null default 'center center',
   created_at timestamptz not null default now(),
   created_by uuid references auth.users(id) default auth.uid()
 );
-
-alter table public.gallery_images
-add column if not exists object_position text not null default 'center center';
 
 alter table public.gallery_images enable row level security;
 
@@ -35,14 +31,6 @@ on public.gallery_images
 for delete
 to authenticated
 using (auth.uid() = created_by);
-
-drop policy if exists "Authenticated users can update their gallery images" on public.gallery_images;
-create policy "Authenticated users can update their gallery images"
-on public.gallery_images
-for update
-to authenticated
-using (auth.uid() = created_by)
-with check (auth.uid() = created_by);
 
 insert into storage.buckets (id, name, public)
 values ('chef-gallery', 'chef-gallery', true)

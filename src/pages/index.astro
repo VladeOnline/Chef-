@@ -8,7 +8,7 @@ const services = [
     description:
       "Intimate dinners prepared at your table with fresh ingredients, polished timing, and warm service.",
     descriptionEs:
-      "Cenas intimas preparadas en tu mesa con ingredientes frescos, tiempos cuidados y servicio calido.",
+      "Cenas íntimas preparadas en tu mesa con ingredientes frescos, tiempos cuidados y servicio cálido.",
   },
   {
     title: "Villa service",
@@ -24,7 +24,7 @@ const services = [
     description:
       "Birthdays, intimate weddings, retreats, proposals, and family gatherings across Costa Rica.",
     descriptionEs:
-      "Cumpleanos, bodas intimas, retiros, propuestas y reuniones familiares en Costa Rica.",
+      "Cumpleaños, bodas íntimas, retiros, propuestas y reuniones familiares en Costa Rica.",
   },
 ];
 
@@ -66,7 +66,7 @@ const chefHighlights = [
     title: "Seasonal ingredients",
     titleEs: "Ingredientes de temporada",
     copy: "Menus are guided by market produce, local seafood, tropical fruit, herbs, and Costa Rican flavors.",
-    copyEs: "Los menus se inspiran en productos de mercado, mariscos locales, frutas tropicales, hierbas y sabores de Costa Rica.",
+    copyEs: "Los menús se inspiran en productos de mercado, mariscos locales, frutas tropicales, hierbas y sabores de Costa Rica.",
   },
   {
     title: "Personalized planning",
@@ -87,7 +87,7 @@ const reviews = [
     quote:
       "The dinner felt effortless and special. Every course had a local touch, and the service was calm, warm, and precise.",
     quoteEs:
-      "La cena se sintio especial y sin complicaciones. Cada plato tenia un toque local y el servicio fue calido, tranquilo y preciso.",
+      "La cena se sintió especial y sin complicaciones. Cada plato tenía un toque local y el servicio fue cálido, tranquilo y preciso.",
     author: "Megan L.",
     location: "Nosara",
     rating: 5,
@@ -96,7 +96,7 @@ const reviews = [
     quote:
       "Our favorite part was watching the chef explain the ingredients. It turned dinner into a real Costa Rica memory.",
     quoteEs:
-      "Nuestra parte favorita fue escuchar al chef explicar los ingredientes. Convirtio la cena en un recuerdo real de Costa Rica.",
+      "Nuestra parte favorita fue escuchar al chef explicar los ingredientes. Convirtió la cena en un recuerdo real de Costa Rica.",
     author: "Daniel R.",
     location: "Tamarindo",
     rating: 5,
@@ -105,7 +105,7 @@ const reviews = [
     quote:
       "Beautiful plating, fresh seafood, and a menu that worked for everyone in the group.",
     quoteEs:
-      "Presentacion hermosa, mariscos frescos y un menu que funciono para todo el grupo.",
+      "Presentación hermosa, mariscos frescos y un menú que funcionó para todo el grupo.",
     author: "Sofia M.",
     location: "Manuel Antonio",
     rating: 5,
@@ -113,7 +113,7 @@ const reviews = [
 ];
 
 const renderStars = (rating = 5) =>
-  Array.from({ length: 5 }, (_, index) => (index < rating ? "★" : "☆")).join("");
+  Array.from({ length: 5 }, (_, index) => (index < rating ? "\u2605" : "\u2606")).join("");
 ---
 
 <!doctype html>
@@ -197,7 +197,7 @@ const renderStars = (rating = 5) =>
               Private culinary experiences in Costa Rica
             </p>
             <h1 class="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-7xl" data-i18n="heroTitle">
-              A private chef experience for your villa, retreat, or celebration.
+              Private chef service for villas, retreats, and intimate celebrations.
             </h1>
             <p class="mt-6 max-w-2xl text-lg leading-8 text-white/88" data-i18n="heroCopy">
               Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.
@@ -281,7 +281,7 @@ const renderStars = (rating = 5) =>
           <div class="max-w-3xl">
             <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="galleryKicker">Gallery</p>
             <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="galleryTitle">
-              Tropical, elegant, and made for the table in front of you.
+              Tropical flavors, elegant plates, and a table made just for you.
             </h2>
             <p class="mt-5 text-lg leading-8 text-ink/70" data-i18n="galleryCopy">
               A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.
@@ -297,7 +297,6 @@ const renderStars = (rating = 5) =>
                       class="h-80 w-full rounded-md object-cover"
                       src={image.src}
                       alt={image.alt}
-                      style={`object-position: ${image.objectPosition || "center center"}`}
                     />
                   </figure>
                 ))}
@@ -381,15 +380,6 @@ const renderStars = (rating = 5) =>
               <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://wa.me/50686584625" target="_blank" rel="noreferrer">
                 WhatsApp: +506 8658 4625
               </a>
-              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="tel:+50686584625">
-                <span data-i18n="phoneLabel">Call the chef</span>: +506 8658 4625
-              </a>
-              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://www.instagram.com/jose.nunezflores.3?igsi=dGRkdnczenU1YnN3" target="_blank" rel="noreferrer">
-                Instagram: @jose.nunezflores.3
-              </a>
-              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://www.facebook.com/share/1Dn4Xq1AdB/" target="_blank" rel="noreferrer">
-                Facebook
-              </a>
               <span class="rounded-lg border border-white/15 bg-white/10 px-4 py-3" data-i18n="areas">
                 Serving villas, homes, and private venues across Costa Rica.
               </span>
@@ -408,8 +398,8 @@ const renderStars = (rating = 5) =>
                   <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="date" type="date" data-booking-date required />
                   <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="guests" type="number" min="1" placeholder="Guests" data-placeholder-en="Guests" data-placeholder-es="Personas" required />
                 </div>
-                <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="location" type="text" placeholder="Location in Costa Rica" data-placeholder-en="Location in Costa Rica" data-placeholder-es="Ubicacion en Costa Rica" required />
-                <textarea class="min-h-32 rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="details" placeholder="Occasion, menu ideas, allergies, or preferences" data-placeholder-en="Occasion, menu ideas, allergies, or preferences" data-placeholder-es="Ocasion, ideas de menu, alergias o preferencias"></textarea>
+                <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="location" type="text" placeholder="Location in Costa Rica" data-placeholder-en="Location in Costa Rica" data-placeholder-es="Ubicación en Costa Rica" required />
+                <textarea class="min-h-32 rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="details" placeholder="Occasion, menu ideas, allergies, or preferences" data-placeholder-en="Occasion, menu ideas, allergies, or preferences" data-placeholder-es="Ocasión, ideas de menú, alergias o preferencias"></textarea>
                 <button class="rounded-lg bg-clay px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit" data-i18n="bookingButton">
                   Send by WhatsApp
                 </button>
@@ -443,7 +433,7 @@ const renderStars = (rating = 5) =>
                   </span>
                 </label>
                 <input class="rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="favorite" type="text" placeholder="Favorite part of the experience" data-placeholder-en="Favorite part of the experience" data-placeholder-es="Parte favorita de la experiencia" required />
-                <textarea class="min-h-32 rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="review" placeholder="Write your review" data-placeholder-en="Write your review" data-placeholder-es="Escribe tu resena" required></textarea>
+                <textarea class="min-h-32 rounded-lg border border-black/15 px-4 py-3 outline-none focus:border-forest" name="review" placeholder="Write your review" data-placeholder-en="Write your review" data-placeholder-es="Escribe tu reseña" required></textarea>
                 <button class="rounded-lg bg-forest px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit" data-i18n="reviewButton">
                   Send review
                 </button>
@@ -456,7 +446,7 @@ const renderStars = (rating = 5) =>
     </main>
 
     <footer class="border-t border-black/10 bg-forest py-10 text-white">
-      <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr_0.8fr] lg:px-8">
+      <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-[1.2fr_0.8fr] lg:px-8">
         <div>
           <div class="flex items-center gap-3">
             <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg border border-white/15 bg-[linear-gradient(135deg,#fbf8f1_0%,#f0b36d_100%)] text-forest" aria-hidden="true">
@@ -495,45 +485,13 @@ const renderStars = (rating = 5) =>
           </div>
         </div>
 
-        <div class="flex flex-col gap-4">
-          <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-white/60" data-i18n="footerContact">
-            Chef contact
-          </p>
-          <div class="grid gap-3 text-sm font-bold">
-            <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-white transition hover:bg-white hover:text-forest" href="https://wa.me/50686584625" target="_blank" rel="noreferrer">
-              WhatsApp: +506 8658 4625
-            </a>
-            <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-white transition hover:bg-white hover:text-forest" href="tel:+50686584625">
-              <span data-i18n="footerCall">Call directly</span>
-            </a>
-            <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-white transition hover:bg-white hover:text-forest" href="#contact" data-i18n="footerReserve">
-              Request a date
-            </a>
-          </div>
-        </div>
-
         <div class="flex flex-col gap-4 md:items-end">
-          <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-white/60" data-i18n="footerFollow">
-            Follow the chef
+          <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-white/60" data-i18n="footerReserveTitle">
+            Reservations
           </p>
-          <div class="flex flex-wrap gap-3 md:justify-end">
-            <a
-              class="rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white hover:text-forest"
-              href="https://www.instagram.com/jose.nunezflores.3?igsi=dGRkdnczenU1YnN3"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Instagram
-            </a>
-            <a
-              class="rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white hover:text-forest"
-              href="https://www.facebook.com/share/1Dn4Xq1AdB/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Facebook
-            </a>
-          </div>
+          <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-forest" href="#contact" data-i18n="footerReserve">
+            Request a date
+          </a>
         </div>
       </div>
     </footer>
@@ -595,7 +553,7 @@ const renderStars = (rating = 5) =>
           navContact: "Contact",
           bookCta: "Book",
           heroKicker: "Private culinary experiences in Costa Rica",
-          heroTitle: "A private chef experience for your villa, retreat, or celebration.",
+          heroTitle: "Private chef service for villas, retreats, and intimate celebrations.",
           heroCopy: "Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.",
           heroPrimary: "Request availability",
           heroSecondary: "Read guest reviews",
@@ -606,7 +564,7 @@ const renderStars = (rating = 5) =>
           chefTitle: "Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.",
           chefCopy: "I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.",
           galleryKicker: "Gallery",
-          galleryTitle: "Tropical, elegant, and made for the table in front of you.",
+          galleryTitle: "Tropical flavors, elegant plates, and a table made just for you.",
           galleryCopy: "A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.",
           reviewsKicker: "Guest reviews",
           reviewsTitle: "Share what made the experience memorable.",
@@ -615,7 +573,6 @@ const renderStars = (rating = 5) =>
           contactKicker: "Booking",
           contactTitle: "Tell us about your private chef experience.",
           contactCopy: "Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.",
-          phoneLabel: "Call the chef",
           areas: "Serving villas, homes, and private venues across Costa Rica.",
           location: "Location: Costa Rica",
           bookingFormTitle: "Request a date",
@@ -626,55 +583,50 @@ const renderStars = (rating = 5) =>
           footerText: "Private villa dinners, events, chef service, and guest reviews.",
           footerRights: "All rights reserved.",
           footerCreator: "Page created by",
-          footerContact: "Chef contact",
-          footerCall: "Call directly",
+          footerReserveTitle: "Reservations",
           footerReserve: "Request a date",
-          footerFollow: "Follow the chef",
         },
         es: {
           brandTagline: "Cenas en villa y eventos privados",
           navServices: "Servicios",
           navChef: "Chef",
-          navGallery: "Galeria",
-          navReviews: "Resenas",
+          navGallery: "Galería",
+          navReviews: "Reseñas",
           navContact: "Contacto",
           bookCta: "Reservar",
           heroKicker: "Experiencias culinarias privadas en Costa Rica",
-          heroTitle: "Una experiencia de chef privado para tu villa, retiro o celebracion.",
-          heroCopy: "Ingredientes locales frescos, menus personalizados y servicio cuidado para comidas memorables en Costa Rica.",
+          heroTitle: "Chef privado para villas, retiros y celebraciones íntimas.",
+          heroCopy: "Ingredientes locales frescos, menús personalizados y servicio cuidado para comidas memorables en Costa Rica.",
           heroPrimary: "Solicitar disponibilidad",
-          heroSecondary: "Leer resenas",
+          heroSecondary: "Leer reseñas",
           servicesKicker: "Servicios",
-          servicesTitle: "Disenado para la forma en que quieres reunir a tus invitados.",
-          servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea segun tu ubicacion, horario, gustos e invitados.",
+          servicesTitle: "Diseñado para la forma en que quieres reunir a tus invitados.",
+          servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea según tu ubicación, horario, gustos e invitados.",
           chefKicker: "Sobre el chef",
           chefTitle: "Hola, me llamo Jose Luis, un costarricense amante de la cocina.",
-          chefCopy: "La cocina es mi pasion. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan calidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
-          galleryKicker: "Galeria",
-          galleryTitle: "Tropical, elegante y hecho para la mesa frente a ti.",
+          chefCopy: "La cocina es mi pasión. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan cálidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
+          galleryKicker: "Galería",
+          galleryTitle: "Sabores tropicales, platos elegantes y una mesa hecha para ti.",
           galleryCopy: "Una muestra visual de cenas privadas, platos servidos, ingredientes frescos y hospitalidad relajada en Costa Rica.",
-          reviewsKicker: "Resenas de clientes",
-          reviewsTitle: "Comparte que hizo memorable la experiencia.",
-          reviewsCopy: "Los clientes pueden dejar una resena y contar su parte favorita de la noche.",
-          reviewsButton: "Dejar una resena",
+          reviewsKicker: "Reseñas de clientes",
+          reviewsTitle: "Comparte qué hizo memorable la experiencia.",
+          reviewsCopy: "Los clientes pueden dejar una reseña y contar su parte favorita de la noche.",
+          reviewsButton: "Dejar una reseña",
           contactKicker: "Reservas",
-          contactTitle: "Cuentanos sobre tu experiencia de chef privado.",
-          contactCopy: "Envia fecha, ubicacion, numero de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
-          phoneLabel: "Llamar al chef",
+          contactTitle: "Cuéntanos sobre tu experiencia de chef privado.",
+          contactCopy: "Envía fecha, ubicación, número de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
           areas: "Servicio para villas, casas y espacios privados en Costa Rica.",
-          location: "Ubicacion: Costa Rica",
+          location: "Ubicación: Costa Rica",
           bookingFormTitle: "Solicitar fecha",
           bookingButton: "Enviar por WhatsApp",
-          reviewFormTitle: "Dejar una resena",
-          ratingLabel: "Calificacion",
-          reviewButton: "Enviar resena",
-          footerText: "Cenas privadas, eventos, servicio de chef y resenas de clientes.",
+          reviewFormTitle: "Dejar una reseña",
+          ratingLabel: "Calificación",
+          reviewButton: "Enviar reseña",
+          footerText: "Cenas privadas, eventos, servicio de chef y reseñas de clientes.",
           footerRights: "Todos los derechos reservados.",
-          footerCreator: "Pagina creada por",
-          footerContact: "Contacto del chef",
-          footerCall: "Llamar directo",
+          footerCreator: "Página creada por",
+          footerReserveTitle: "Reservas",
           footerReserve: "Solicitar fecha",
-          footerFollow: "Sigue al chef",
         },
       };
 
@@ -701,6 +653,7 @@ const renderStars = (rating = 5) =>
         });
 
         if (toggle) toggle.textContent = lang === "en" ? "ES" : "EN";
+        loadPublishedReviews?.();
       }
 
       toggle?.addEventListener("click", () => setLanguage(currentLang === "en" ? "es" : "en"));
@@ -761,7 +714,7 @@ const renderStars = (rating = 5) =>
                 `Nombre: ${name}`,
                 `Fecha: ${formatDateForMessage(date, lang)}`,
                 `Cantidad de personas: ${guests}`,
-                `Ubicacion: ${location}`,
+                `Ubicación: ${location}`,
                 "",
                 "Detalles de la experiencia:",
                 details || "Sin detalles adicionales por ahora.",
@@ -780,39 +733,6 @@ const renderStars = (rating = 5) =>
                 details || "No extra details yet.",
                 "",
                 "I look forward to your availability and proposal. Thank you.",
-              ];
-
-        return lines.join("\n");
-      }
-
-      function reviewMessage(form, lang) {
-        const name = getFormValue(form, "name");
-        const rating = getFormValue(form, "rating");
-        const favorite = getFormValue(form, "favorite");
-        const review = getFormValue(form, "review");
-        const stars = renderReviewStars(rating);
-
-        const lines =
-          lang === "es"
-            ? [
-                "Hola Jose Luis, quiero dejar una resena de la experiencia.",
-                "",
-                `Nombre: ${name}`,
-                `Calificacion: ${stars} (${rating}/5)`,
-                `Parte favorita: ${favorite}`,
-                "",
-                "Resena:",
-                review,
-              ]
-            : [
-                "Hi Jose Luis, I would like to leave a review of the experience.",
-                "",
-                `Name: ${name}`,
-                `Rating: ${stars} (${rating}/5)`,
-                `Favorite part: ${favorite}`,
-                "",
-                "Review:",
-                review,
               ];
 
         return lines.join("\n");
@@ -866,7 +786,7 @@ const renderStars = (rating = 5) =>
 
       async function saveReview(form) {
         if (!supabaseUrl || !supabaseAnonKey) {
-          throw new Error("Supabase no esta configurado para guardar resenas.");
+          throw new Error("Supabase no está configurado para guardar reseñas.");
         }
 
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -886,22 +806,19 @@ const renderStars = (rating = 5) =>
         event.preventDefault();
         const form = event.currentTarget;
         const activeLang = document.documentElement.lang === "es" ? "es" : "en";
-        const message = reviewMessage(form, activeLang);
 
         try {
-          setReviewSubmitStatus(activeLang === "es" ? "Guardando resena..." : "Saving review...");
+          setReviewSubmitStatus(activeLang === "es" ? "Guardando reseña..." : "Saving review...");
           await saveReview(form);
-          setReviewSubmitStatus(activeLang === "es" ? "Resena guardada. Gracias." : "Review saved. Thank you.");
+          setReviewSubmitStatus(activeLang === "es" ? "Reseña guardada. Gracias." : "Review saved. Thank you.");
           await loadPublishedReviews();
           form.reset();
           selectedRating = 5;
           paintRating(selectedRating);
         } catch (error) {
-          setReviewSubmitStatus(error.message || "No se pudo guardar la resena.", true);
+          setReviewSubmitStatus(error.message || "No se pudo guardar la reseña.", true);
           return;
         }
-
-        window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
 
       const ratingRoot = document.querySelector("[data-star-rating]");
@@ -1134,13 +1051,14 @@ const renderStars = (rating = 5) =>
             const quote = escapeHtml(review.review || "");
             const favorite = escapeHtml(review.favorite_part || "");
             const stars = renderReviewStars(rating);
+            const favoriteLabel = document.documentElement.lang === "es" ? "Parte favorita" : "Favorite";
 
             return `
               <article class="rounded-lg border border-black/10 bg-white p-6 shadow-sm">
                 <p class="mb-3 text-xl tracking-[0.12em] text-[#c9823f]" aria-label="${rating} out of 5 stars">${stars}</p>
                 <p class="text-lg leading-8 text-ink/80">"${quote}"</p>
                 <p class="mt-4 text-sm font-extrabold text-forest">${name}</p>
-                ${favorite ? `<p class="mt-3 text-sm font-semibold leading-6 text-ink/60">Favorite: ${favorite}</p>` : ""}
+                ${favorite ? `<p class="mt-3 text-sm font-semibold leading-6 text-ink/60">${favoriteLabel}: ${favorite}</p>` : ""}
               </article>
             `;
           })
@@ -1157,21 +1075,11 @@ const renderStars = (rating = 5) =>
         if (!grid || !supabaseUrl || !supabaseAnonKey) return;
 
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
-        let response = await supabase
+        const { data, error } = await supabase
           .from(galleryTable)
-          .select("image_url, alt_text, object_position, sort_order, created_at")
+          .select("image_url, alt_text, sort_order, created_at")
           .order("sort_order", { ascending: true })
           .order("created_at", { ascending: false });
-
-        if (response.error && response.error.message?.includes("object_position")) {
-          response = await supabase
-            .from(galleryTable)
-            .select("image_url, alt_text, sort_order, created_at")
-            .order("sort_order", { ascending: true })
-            .order("created_at", { ascending: false });
-        }
-
-        const { data, error } = response;
 
         if (error) {
           if (status) {
@@ -1192,7 +1100,6 @@ const renderStars = (rating = 5) =>
           img.src = image.image_url;
           img.alt = image.alt_text || "Private chef Costa Rica gallery photo";
           img.loading = "lazy";
-          img.style.objectPosition = image.object_position || "center center";
           figure.appendChild(img);
           grid.appendChild(figure);
         });
@@ -1218,7 +1125,7 @@ const renderStars = (rating = 5) =>
             navContact: "Contact",
             bookCta: "Book",
             heroKicker: "Private culinary experiences in Costa Rica",
-            heroTitle: "A private chef experience for your villa, retreat, or celebration.",
+            heroTitle: "Private chef service for villas, retreats, and intimate celebrations.",
             heroCopy: "Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.",
             heroPrimary: "Request availability",
             heroSecondary: "Read guest reviews",
@@ -1229,7 +1136,7 @@ const renderStars = (rating = 5) =>
             chefTitle: "Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.",
             chefCopy: "I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.",
             galleryKicker: "Gallery",
-            galleryTitle: "Tropical, elegant, and made for the table in front of you.",
+            galleryTitle: "Tropical flavors, elegant plates, and a table made just for you.",
             galleryCopy: "A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.",
             reviewsKicker: "Guest reviews",
             reviewsTitle: "Share what made the experience memorable.",
@@ -1238,7 +1145,6 @@ const renderStars = (rating = 5) =>
             contactKicker: "Booking",
             contactTitle: "Tell us about your private chef experience.",
             contactCopy: "Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.",
-            phoneLabel: "Call the chef",
             areas: "Serving villas, homes, and private venues across Costa Rica.",
             location: "Location: Costa Rica",
             bookingFormTitle: "Request a date",
@@ -1249,55 +1155,50 @@ const renderStars = (rating = 5) =>
             footerText: "Private villa dinners, events, chef service, and guest reviews.",
             footerRights: "All rights reserved.",
             footerCreator: "Page created by",
-            footerContact: "Chef contact",
-            footerCall: "Call directly",
+            footerReserveTitle: "Reservations",
             footerReserve: "Request a date",
-            footerFollow: "Follow the chef",
           },
           es: {
             brandTagline: "Cenas en villa y eventos privados",
             navServices: "Servicios",
             navChef: "Chef",
-            navGallery: "Galeria",
-            navReviews: "Resenas",
+            navGallery: "Galería",
+            navReviews: "Reseñas",
             navContact: "Contacto",
             bookCta: "Reservar",
             heroKicker: "Experiencias culinarias privadas en Costa Rica",
-            heroTitle: "Una experiencia de chef privado para tu villa, retiro o celebracion.",
-            heroCopy: "Ingredientes locales frescos, menus personalizados y servicio cuidado para comidas memorables en Costa Rica.",
+            heroTitle: "Chef privado para villas, retiros y celebraciones íntimas.",
+            heroCopy: "Ingredientes locales frescos, menús personalizados y servicio cuidado para comidas memorables en Costa Rica.",
             heroPrimary: "Solicitar disponibilidad",
-            heroSecondary: "Leer resenas",
+            heroSecondary: "Leer reseñas",
             servicesKicker: "Servicios",
-            servicesTitle: "Disenado para la forma en que quieres reunir a tus invitados.",
-            servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea segun tu ubicacion, horario, gustos e invitados.",
+            servicesTitle: "Diseñado para la forma en que quieres reunir a tus invitados.",
+            servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea según tu ubicación, horario, gustos e invitados.",
             chefKicker: "Sobre el chef",
             chefTitle: "Hola, me llamo Jose Luis, un costarricense amante de la cocina.",
-            chefCopy: "La cocina es mi pasion. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan calidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
-            galleryKicker: "Galeria",
-            galleryTitle: "Tropical, elegante y hecho para la mesa frente a ti.",
+            chefCopy: "La cocina es mi pasión. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan cálidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
+            galleryKicker: "Galería",
+            galleryTitle: "Sabores tropicales, platos elegantes y una mesa hecha para ti.",
             galleryCopy: "Una muestra visual de cenas privadas, platos servidos, ingredientes frescos y hospitalidad relajada en Costa Rica.",
-            reviewsKicker: "Resenas de clientes",
-            reviewsTitle: "Comparte que hizo memorable la experiencia.",
-            reviewsCopy: "Los clientes pueden dejar una resena y contar su parte favorita de la noche.",
-            reviewsButton: "Dejar una resena",
+            reviewsKicker: "Reseñas de clientes",
+            reviewsTitle: "Comparte qué hizo memorable la experiencia.",
+            reviewsCopy: "Los clientes pueden dejar una reseña y contar su parte favorita de la noche.",
+            reviewsButton: "Dejar una reseña",
             contactKicker: "Reservas",
-            contactTitle: "Cuentanos sobre tu experiencia de chef privado.",
-            contactCopy: "Envia fecha, ubicacion, numero de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
-            phoneLabel: "Llamar al chef",
+            contactTitle: "Cuéntanos sobre tu experiencia de chef privado.",
+            contactCopy: "Envía fecha, ubicación, número de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
             areas: "Servicio para villas, casas y espacios privados en Costa Rica.",
-            location: "Ubicacion: Costa Rica",
+            location: "Ubicación: Costa Rica",
             bookingFormTitle: "Solicitar fecha",
             bookingButton: "Enviar por WhatsApp",
-            reviewFormTitle: "Dejar una resena",
-            ratingLabel: "Calificacion",
-            reviewButton: "Enviar resena",
-            footerText: "Cenas privadas, eventos, servicio de chef y resenas de clientes.",
+            reviewFormTitle: "Dejar una reseña",
+            ratingLabel: "Calificación",
+            reviewButton: "Enviar reseña",
+            footerText: "Cenas privadas, eventos, servicio de chef y reseñas de clientes.",
             footerRights: "Todos los derechos reservados.",
-            footerCreator: "Pagina creada por",
-            footerContact: "Contacto del chef",
-            footerCall: "Llamar directo",
+            footerCreator: "Página creada por",
+            footerReserveTitle: "Reservas",
             footerReserve: "Solicitar fecha",
-            footerFollow: "Sigue al chef",
           },
         };
 
