@@ -297,6 +297,7 @@ const renderStars = (rating = 5) =>
                       class="h-80 w-full rounded-md object-cover"
                       src={image.src}
                       alt={image.alt}
+                      style={`object-position: ${image.objectPosition || "center center"}`}
                     />
                   </figure>
                 ))}
@@ -446,6 +447,7 @@ const renderStars = (rating = 5) =>
                 <button class="rounded-lg bg-forest px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit" data-i18n="reviewButton">
                   Send review
                 </button>
+                <p class="min-h-6 text-sm font-semibold text-ink/70" data-review-submit-status></p>
               </div>
             </form>
           </div>
@@ -581,6 +583,7 @@ const renderStars = (rating = 5) =>
       const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
       const galleryBucket = import.meta.env.PUBLIC_SUPABASE_GALLERY_BUCKET || "chef-gallery";
       const galleryTable = import.meta.env.PUBLIC_SUPABASE_GALLERY_TABLE || "gallery_images";
+      const reviewsTable = import.meta.env.PUBLIC_SUPABASE_REVIEWS_TABLE || "chef_reviews";
 
       const translations = {
         en: {
@@ -707,6 +710,29 @@ const renderStars = (rating = 5) =>
         return String(data.get(name) || "").trim();
       }
 
+      function setReviewSubmitStatus(message, isError = false) {
+        const status = document.querySelector("[data-review-submit-status]");
+        if (!status) return;
+        status.textContent = message;
+        status.className = `min-h-6 text-sm font-semibold ${isError ? "text-red-700" : "text-forest"}`;
+      }
+
+      function renderReviewStars(rating) {
+        const ratingNumber = Math.max(0.5, Math.min(5, Number(rating) || 5));
+        const fullStars = Math.floor(ratingNumber);
+        const hasHalfStar = ratingNumber % 1 !== 0;
+        return `${"\u2605".repeat(fullStars)}${hasHalfStar ? "\u00BD" : ""}`;
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
       function formatDateForMessage(dateValue, lang) {
         if (!dateValue) return lang === "es" ? "No indicada" : "Not provided";
         const [year, month, day] = dateValue.split("-").map(Number);
@@ -764,10 +790,7 @@ const renderStars = (rating = 5) =>
         const rating = getFormValue(form, "rating");
         const favorite = getFormValue(form, "favorite");
         const review = getFormValue(form, "review");
-        const ratingNumber = Number(rating) || 5;
-        const fullStars = Math.floor(ratingNumber);
-        const hasHalfStar = ratingNumber % 1 !== 0;
-        const stars = `${"\u2605".repeat(fullStars)}${hasHalfStar ? "\u00BD" : ""}`;
+        const stars = renderReviewStars(rating);
 
         const lines =
           lang === "es"
@@ -841,10 +864,42 @@ const renderStars = (rating = 5) =>
         window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
 
-      document.querySelector("[data-review-form]")?.addEventListener("submit", (event) => {
+      async function saveReview(form) {
+        if (!supabaseUrl || !supabaseAnonKey) {
+          throw new Error("Supabase no esta configurado para guardar resenas.");
+        }
+
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+        const rating = Number(getFormValue(form, "rating")) || 5;
+
+        const { error } = await supabase.from(reviewsTable).insert({
+          name: getFormValue(form, "name"),
+          rating,
+          favorite_part: getFormValue(form, "favorite"),
+          review: getFormValue(form, "review"),
+        });
+
+        if (error) throw error;
+      }
+
+      document.querySelector("[data-review-form]")?.addEventListener("submit", async (event) => {
         event.preventDefault();
         const activeLang = document.documentElement.lang === "es" ? "es" : "en";
         const message = reviewMessage(event.currentTarget, activeLang);
+
+        try {
+          setReviewSubmitStatus(activeLang === "es" ? "Guardando resena..." : "Saving review...");
+          await saveReview(event.currentTarget);
+          setReviewSubmitStatus(activeLang === "es" ? "Resena guardada. Gracias." : "Review saved. Thank you.");
+          await loadPublishedReviews();
+          event.currentTarget.reset();
+          selectedRating = 5;
+          paintRating(selectedRating);
+        } catch (error) {
+          setReviewSubmitStatus(error.message || "No se pudo guardar la resena.", true);
+          return;
+        }
+
         window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
 
@@ -1057,6 +1112,43 @@ const renderStars = (rating = 5) =>
         }
       }
 
+      async function loadPublishedReviews() {
+        const track = document.querySelector("[data-review-track]");
+
+        if (!track || !supabaseUrl || !supabaseAnonKey) return;
+
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+        const { data, error } = await supabase
+          .from(reviewsTable)
+          .select("name, rating, favorite_part, review, created_at")
+          .order("created_at", { ascending: false })
+          .limit(20);
+
+        if (error || !data || data.length === 0) return;
+
+        track.innerHTML = data
+          .map((review) => {
+            const name = escapeHtml(review.name || "Cliente");
+            const rating = Number(review.rating) || 5;
+            const quote = escapeHtml(review.review || "");
+            const favorite = escapeHtml(review.favorite_part || "");
+            const stars = renderReviewStars(rating);
+
+            return `
+              <article class="rounded-lg border border-black/10 bg-white p-6 shadow-sm">
+                <p class="mb-3 text-xl tracking-[0.12em] text-[#c9823f]" aria-label="${rating} out of 5 stars">${stars}</p>
+                <p class="text-lg leading-8 text-ink/80">"${quote}"</p>
+                <p class="mt-4 text-sm font-extrabold text-forest">${name}</p>
+                ${favorite ? `<p class="mt-3 text-sm font-semibold leading-6 text-ink/60">Favorite: ${favorite}</p>` : ""}
+              </article>
+            `;
+          })
+          .join("");
+
+        if (reviewMarquee) reviewMarquee.scrollTo({ top: 0, behavior: "auto" });
+        startReviewMarquee();
+      }
+
       async function loadPublishedGallery() {
         const grid = document.querySelector("[data-public-gallery]");
         const status = document.querySelector("[data-gallery-status]");
@@ -1064,11 +1156,21 @@ const renderStars = (rating = 5) =>
         if (!grid || !supabaseUrl || !supabaseAnonKey) return;
 
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
-        const { data, error } = await supabase
+        let response = await supabase
           .from(galleryTable)
-          .select("image_url, alt_text, sort_order, created_at")
+          .select("image_url, alt_text, object_position, sort_order, created_at")
           .order("sort_order", { ascending: true })
           .order("created_at", { ascending: false });
+
+        if (response.error && response.error.message?.includes("object_position")) {
+          response = await supabase
+            .from(galleryTable)
+            .select("image_url, alt_text, sort_order, created_at")
+            .order("sort_order", { ascending: true })
+            .order("created_at", { ascending: false });
+        }
+
+        const { data, error } = response;
 
         if (error) {
           if (status) {
@@ -1089,6 +1191,7 @@ const renderStars = (rating = 5) =>
           img.src = image.image_url;
           img.alt = image.alt_text || "Private chef Costa Rica gallery photo";
           img.loading = "lazy";
+          img.style.objectPosition = image.object_position || "center center";
           figure.appendChild(img);
           grid.appendChild(figure);
         });
@@ -1100,6 +1203,7 @@ const renderStars = (rating = 5) =>
       }
 
       loadPublishedGallery();
+      loadPublishedReviews();
     </script>
     <script is:inline>
       (() => {

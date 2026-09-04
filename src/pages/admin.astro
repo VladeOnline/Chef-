@@ -61,7 +61,7 @@ import "../styles/global.css";
           <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 class="text-2xl font-extrabold text-forest">Fotos de la galeria</h2>
-              <p class="mt-2 text-sm leading-6 text-ink/65">Sube imagenes JPG, PNG, WebP o AVIF. La foto se mostrara completa, sin recorte.</p>
+              <p class="mt-2 text-sm leading-6 text-ink/65">Sube imagenes JPG, PNG, WebP o AVIF y elige que parte debe quedar visible.</p>
             </div>
             <a class="rounded-lg border border-black/10 px-4 py-2 text-center text-sm font-bold text-forest hover:border-forest" href="/#gallery">
               Ver galeria
@@ -76,6 +76,16 @@ import "../styles/global.css";
             <label class="grid gap-2 text-sm font-bold text-ink/75">
               Orden en la galeria
               <input class="rounded-lg border border-black/15 bg-white px-4 py-3 text-base font-normal outline-none focus:border-forest" name="sort_order" type="number" placeholder="0 aparece primero, 100 aparece al final" />
+            </label>
+            <label class="grid gap-2 text-sm font-bold text-ink/75">
+              Parte importante de la foto
+              <select class="rounded-lg border border-black/15 bg-white px-4 py-3 text-base font-normal outline-none focus:border-forest" name="object_position">
+                <option value="center center">Centro</option>
+                <option value="center top">Arriba</option>
+                <option value="center bottom">Abajo</option>
+                <option value="left center">Izquierda</option>
+                <option value="right center">Derecha</option>
+              </select>
             </label>
             <label class="grid gap-2 text-sm font-bold text-ink/75">
               Foto
@@ -120,6 +130,19 @@ import "../styles/global.css";
         </div>
         <div class="grid gap-3 p-4">
           <p class="text-sm font-semibold leading-6 text-ink/70" data-photo-alt></p>
+          <label class="grid gap-2 text-sm font-bold text-ink/75">
+            Enfoque visible
+            <select class="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm font-normal outline-none focus:border-forest" data-photo-position>
+              <option value="center center">Centro</option>
+              <option value="center top">Arriba</option>
+              <option value="center bottom">Abajo</option>
+              <option value="left center">Izquierda</option>
+              <option value="right center">Derecha</option>
+            </select>
+          </label>
+          <button class="rounded-lg border border-forest/20 px-4 py-2 text-sm font-bold text-forest hover:bg-forest hover:text-white" type="button" data-save-position>
+            Guardar enfoque
+          </button>
           <button class="rounded-lg border border-red-200 px-4 py-2 text-sm font-bold text-red-700 hover:bg-red-50" type="button" data-delete-photo>
             Eliminar foto
           </button>
@@ -202,6 +225,7 @@ import "../styles/global.css";
 
       let supabase;
       let pendingDeleteResolve;
+      let gallerySupportsObjectPosition = true;
 
       function setStatus(message, isError = false) {
         if (!statusNode) return;
@@ -248,8 +272,10 @@ import "../styles/global.css";
       }
 
       function renderStars(rating) {
-        const normalizedRating = Math.max(1, Math.min(5, Number(rating) || 5));
-        return "★".repeat(normalizedRating) + "☆".repeat(5 - normalizedRating);
+        const normalizedRating = Math.max(0.5, Math.min(5, Number(rating) || 5));
+        const fullStars = Math.floor(normalizedRating);
+        const hasHalfStar = normalizedRating % 1 !== 0;
+        return `${"\u2605".repeat(fullStars)}${hasHalfStar ? "\u00BD" : ""}`;
       }
 
       function formatDate(value) {
@@ -259,6 +285,39 @@ import "../styles/global.css";
           month: "short",
           year: "numeric",
         }).format(new Date(value));
+      }
+
+      function getObjectPositionLabel(value) {
+        const labels = {
+          "center center": "Centro",
+          "center top": "Arriba",
+          "center bottom": "Abajo",
+          "left center": "Izquierda",
+          "right center": "Derecha",
+        };
+
+        return labels[value] || labels["center center"];
+      }
+
+      async function fetchGalleryImages() {
+        let response = await supabase
+          .from(galleryTable)
+          .select("id, image_url, alt_text, storage_path, sort_order, object_position, created_at")
+          .order("sort_order", { ascending: true })
+          .order("created_at", { ascending: false });
+
+        if (response.error && response.error.message?.includes("object_position")) {
+          gallerySupportsObjectPosition = false;
+          response = await supabase
+            .from(galleryTable)
+            .select("id, image_url, alt_text, storage_path, sort_order, created_at")
+            .order("sort_order", { ascending: true })
+            .order("created_at", { ascending: false });
+        } else {
+          gallerySupportsObjectPosition = true;
+        }
+
+        return response;
       }
 
       function askDeleteConfirmation(options = {}) {
@@ -315,11 +374,7 @@ import "../styles/global.css";
         galleryNode.innerHTML = "";
         setStatus("Cargando fotos...");
 
-        const { data, error } = await supabase
-          .from(galleryTable)
-          .select("id, image_url, alt_text, storage_path, sort_order, created_at")
-          .order("sort_order", { ascending: true })
-          .order("created_at", { ascending: false });
+        const { data, error } = await fetchGalleryImages();
 
         if (error) {
           setStatus(error.message, true);
@@ -335,17 +390,32 @@ import "../styles/global.css";
           const node = template.content.cloneNode(true);
           const image = node.querySelector("[data-photo-image]");
           const alt = node.querySelector("[data-photo-alt]");
+          const positionSelect = node.querySelector("[data-photo-position]");
+          const savePositionButton = node.querySelector("[data-save-position]");
           const deleteButton = node.querySelector("[data-delete-photo]");
+          const objectPosition = photo.object_position || "center center";
 
           image.src = photo.image_url;
           image.alt = photo.alt_text || "Foto de la galeria";
+          image.style.objectPosition = objectPosition;
           alt.textContent = photo.alt_text || "Sin descripcion";
+          positionSelect.value = objectPosition;
+          positionSelect.addEventListener("change", () => {
+            image.style.objectPosition = positionSelect.value;
+          });
+          savePositionButton.addEventListener("click", async () => updatePhotoPosition(photo, positionSelect.value));
           deleteButton.addEventListener("click", async () => deletePhoto(photo));
 
           galleryNode.appendChild(node);
         });
 
-        setStatus(`${data.length} foto${data.length === 1 ? "" : "s"} publicada${data.length === 1 ? "" : "s"}.`);
+        if (gallerySupportsObjectPosition) {
+          setStatus(`${data.length} foto${data.length === 1 ? "" : "s"} publicada${data.length === 1 ? "" : "s"}.`);
+        } else {
+          setStatus(
+            `${data.length} foto${data.length === 1 ? "" : "s"} publicada${data.length === 1 ? "" : "s"}. Para guardar el enfoque, corre el SQL actualizado en Supabase.`,
+          );
+        }
       }
 
       async function loadReviews() {
@@ -356,7 +426,7 @@ import "../styles/global.css";
 
         const { data, error } = await supabase
           .from(reviewsTable)
-          .select("id, name, author, rating, favorite_part, favorite, review, quote, created_at")
+          .select("id, name, rating, favorite_part, review, created_at")
           .order("created_at", { ascending: false });
 
         if (error) {
@@ -424,6 +494,27 @@ import "../styles/global.css";
         }
 
         await loadGallery();
+      }
+
+      async function updatePhotoPosition(photo, objectPosition) {
+        if (!gallerySupportsObjectPosition) {
+          setStatus("Primero corre el SQL actualizado en Supabase para poder guardar el enfoque.", true);
+          return;
+        }
+
+        setStatus(`Guardando enfoque: ${getObjectPositionLabel(objectPosition)}...`);
+
+        const { error } = await supabase
+          .from(galleryTable)
+          .update({ object_position: objectPosition })
+          .eq("id", photo.id);
+
+        if (error) {
+          setStatus(error.message, true);
+          return;
+        }
+
+        setStatus(`Enfoque guardado: ${getObjectPositionLabel(objectPosition)}.`);
       }
 
       async function deleteReview(review) {
@@ -527,14 +618,21 @@ import "../styles/global.css";
           const { data: publicUrlData } = supabase.storage.from(galleryBucket).getPublicUrl(storagePath);
           const altText = String(formData.get("alt") || "").trim();
           const sortOrderValue = String(formData.get("sort_order") || "").trim();
+          const objectPosition = String(formData.get("object_position") || "center center");
           const sortOrder = sortOrderValue ? Number(sortOrderValue) : 100;
 
-          const { error: insertError } = await supabase.from(galleryTable).insert({
+          const photoRecord = {
             image_url: publicUrlData.publicUrl,
             storage_path: storagePath,
             alt_text: altText,
             sort_order: Number.isFinite(sortOrder) ? sortOrder : 100,
-          });
+          };
+
+          if (gallerySupportsObjectPosition) {
+            photoRecord.object_position = objectPosition;
+          }
+
+          const { error: insertError } = await supabase.from(galleryTable).insert(photoRecord);
 
           if (insertError) {
             setStatus(insertError.message, true);
