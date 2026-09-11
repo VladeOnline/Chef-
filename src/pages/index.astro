@@ -126,6 +126,7 @@ const renderStars = (rating = 5) =>
       name="description"
       content="Private chef experiences in Costa Rica for villas, events, wellness retreats, and intimate celebrations."
     />
+    <link rel="icon" href="/images/dining-experience-logo.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -137,14 +138,12 @@ const renderStars = (rating = 5) =>
     <header class="sticky top-0 z-50 border-b border-black/10 bg-cream/90 backdrop-blur">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <a href="#home" class="flex min-w-0 items-center gap-3" aria-label="Chef Privado CR home">
-          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[linear-gradient(135deg,#0f2f21_0%,#1f5b3d_58%,#b86f45_100%)] text-cream shadow-sm ring-1 ring-black/10" aria-hidden="true">
-            <svg class="h-9 w-9" viewBox="0 0 64 64" fill="none">
-              <rect x="9" y="9" width="46" height="46" rx="13" fill="rgba(251,248,241,0.1)" />
-              <path d="M18 46h28" stroke="#fbf8f1" stroke-width="2.5" stroke-linecap="round" opacity="0.86" />
-              <text x="32" y="39" text-anchor="middle" fill="#fbf8f1" font-family="Georgia, serif" font-size="27" font-weight="700">JN</text>
-              <circle cx="47" cy="17" r="4" fill="#f0b36d" />
-            </svg>
-          </span>
+          <img
+            class="h-12 w-12 shrink-0 rounded-full border border-clay/30 bg-cream object-cover shadow-sm ring-1 ring-black/10"
+            src="/images/dining-experience-logo.jpeg"
+            alt=""
+            aria-hidden="true"
+          />
           <span class="min-w-0">
             <span class="block truncate text-sm font-extrabold tracking-wide">Chef Privado CR</span>
             <span class="block truncate text-xs font-medium text-ink/60" data-i18n="brandTagline">Villa dinners and private events</span>
@@ -184,8 +183,8 @@ const renderStars = (rating = 5) =>
         <div class="relative min-h-[calc(100vh-65px)] overflow-hidden">
         <img
           class="scroll-hero-image absolute inset-0 h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=2200&q=85"
-          alt="Private chef preparing food in a bright kitchen"
+          src="/images/hero-dining-experience.png"
+          alt="Elegant private chef dinner table with tropical greenery"
           data-scroll-hero-image
         />
         <div class="scroll-hero-overlay absolute inset-0 bg-[linear-gradient(90deg,rgba(7,31,21,0.86),rgba(16,55,38,0.72),rgba(18,64,43,0.46))]" data-scroll-hero-overlay></div>
@@ -197,14 +196,14 @@ const renderStars = (rating = 5) =>
               Private culinary experiences in Costa Rica
             </p>
             <h1 class="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-7xl" data-i18n="heroTitle">
-              Private chef service for villas, retreats, and intimate celebrations.
+              A dinner created especially for you.
             </h1>
             <p class="mt-6 max-w-2xl text-lg leading-8 text-white/88" data-i18n="heroCopy">
-              Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.
+              You imagine it, we create it. Together with Chef José Núñez, we craft a special gastronomic experience for you and your guests in the comfort of your villa, home, or stay.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
               <a href="#contact" class="rounded-lg bg-clay px-6 py-3.5 text-center font-extrabold text-white transition hover:bg-white hover:text-ink" data-i18n="heroPrimary">
-                Request availability
+                Create experience
               </a>
               <a href="#reviews" class="rounded-lg border border-white/40 bg-white/10 px-6 py-3.5 text-center font-extrabold text-white backdrop-blur transition hover:bg-white hover:text-ink" data-i18n="heroSecondary">
                 Read guest reviews
@@ -252,17 +251,17 @@ const renderStars = (rating = 5) =>
         <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <img
             class="min-h-[460px] w-full rounded-lg object-cover shadow-sm"
-            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1400&q=85"
-            alt="Private chef finishing a dish"
+            src="/images/chef-jose-nunez.png"
+            alt="Chef José Núñez"
           />
 
           <div class="flex flex-col justify-center">
             <p class="text-sm font-extrabold uppercase tracking-[0.18em] text-clay" data-i18n="chefKicker">About the chef</p>
             <h2 class="mt-3 font-serif text-4xl font-bold text-balance sm:text-5xl" data-i18n="chefTitle">
-              Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.
+              Behind every great dinner, there is a story worth enjoying.
             </h2>
             <p class="mt-5 text-lg leading-8 text-ink/70" data-i18n="chefCopy">
-              I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.
+              I am José Núñez, a private chef passionate about creating personalized culinary experiences. My cooking combines carefully selected ingredients, creativity, and attention to the small details that turn every occasion into a memorable experience. I do not work with identical experiences for everyone. Each dinner begins with a conversation: what you want to enjoy, what flavors you like, and what occasion you wish to celebrate. From there, I create an experience designed especially for you and your guests.
             </p>
             <div class="mt-8 grid gap-4">
               {chefHighlights.map((item) => (
@@ -377,8 +376,11 @@ const renderStars = (rating = 5) =>
             </p>
 
             <div class="mt-8 grid gap-3 text-sm font-semibold text-white/90">
-              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://wa.me/50686584625" target="_blank" rel="noreferrer">
-                WhatsApp: +506 8658 4625
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://wa.me/50686584625" target="_blank" rel="noreferrer" data-i18n="whatsappLabel">
+                WhatsApp
+              </a>
+              <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-3 transition hover:bg-white hover:text-forest" href="https://www.instagram.com/diningexperienceathome.jn?utm_source=qr&amp;stkn=MWMyOTJ2azdtZmNneA==" target="_blank" rel="noreferrer" data-i18n="instagramLabel">
+                Instagram
               </a>
               <span class="rounded-lg border border-white/15 bg-white/10 px-4 py-3" data-i18n="areas">
                 Serving villas, homes, and private venues across Costa Rica.
@@ -403,6 +405,7 @@ const renderStars = (rating = 5) =>
                 <button class="rounded-lg bg-clay px-5 py-3 font-extrabold text-white transition hover:bg-ink" type="submit" data-i18n="bookingButton">
                   Send by WhatsApp
                 </button>
+                <p class="min-h-6 text-sm font-semibold text-ink/70" data-booking-submit-status></p>
               </div>
             </form>
 
@@ -449,14 +452,12 @@ const renderStars = (rating = 5) =>
       <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-[1.2fr_0.8fr] lg:px-8">
         <div>
           <div class="flex items-center gap-3">
-            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg border border-white/15 bg-[linear-gradient(135deg,#fbf8f1_0%,#f0b36d_100%)] text-forest" aria-hidden="true">
-              <svg class="h-10 w-10" viewBox="0 0 64 64" fill="none">
-                <rect x="9" y="9" width="46" height="46" rx="13" fill="rgba(15,47,33,0.08)" />
-                <path d="M18 46h28" stroke="#0f2f21" stroke-width="2.5" stroke-linecap="round" opacity="0.82" />
-                <text x="32" y="39" text-anchor="middle" fill="#0f2f21" font-family="Georgia, serif" font-size="27" font-weight="700">JN</text>
-                <circle cx="47" cy="17" r="4" fill="#b86f45" />
-              </svg>
-            </span>
+            <img
+              class="h-16 w-16 shrink-0 rounded-full border border-white/20 bg-cream object-cover shadow-sm"
+              src="/images/dining-experience-logo.jpeg"
+              alt=""
+              aria-hidden="true"
+            />
             <p class="font-serif text-3xl font-bold">Chef Privado CR</p>
           </div>
           <p class="mt-3 max-w-xl text-sm font-semibold leading-6 text-white/72" data-i18n="footerText">
@@ -491,6 +492,9 @@ const renderStars = (rating = 5) =>
           </p>
           <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-forest" href="#contact" data-i18n="footerReserve">
             Request a date
+          </a>
+          <a class="rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-forest" href="https://www.instagram.com/diningexperienceathome.jn?utm_source=qr&amp;stkn=MWMyOTJ2azdtZmNneA==" target="_blank" rel="noreferrer" data-i18n="instagramLabel">
+            Instagram
           </a>
         </div>
       </div>
@@ -553,16 +557,16 @@ const renderStars = (rating = 5) =>
           navContact: "Contact",
           bookCta: "Book",
           heroKicker: "Private culinary experiences in Costa Rica",
-          heroTitle: "Private chef service for villas, retreats, and intimate celebrations.",
-          heroCopy: "Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.",
-          heroPrimary: "Request availability",
+          heroTitle: "A dinner created especially for you.",
+          heroCopy: "You imagine it, we create it. Together with Chef José Núñez, we craft a special gastronomic experience for you and your guests in the comfort of your villa, home, or stay.",
+          heroPrimary: "Create experience",
           heroSecondary: "Read guest reviews",
           servicesKicker: "Services",
           servicesTitle: "Built around the way you want to gather.",
           servicesCopy: "From private dinners and villa service to events and celebrations, each experience is planned around your location, schedule, tastes, and guests.",
           chefKicker: "About the chef",
-          chefTitle: "Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.",
-          chefCopy: "I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.",
+          chefTitle: "Behind every great dinner, there is a story worth enjoying.",
+          chefCopy: "I am José Núñez, a private chef passionate about creating personalized culinary experiences. My cooking combines carefully selected ingredients, creativity, and attention to the small details that turn every occasion into a memorable experience. I do not work with identical experiences for everyone. Each dinner begins with a conversation: what you want to enjoy, what flavors you like, and what occasion you wish to celebrate. From there, I create an experience designed especially for you and your guests.",
           galleryKicker: "Gallery",
           galleryTitle: "Tropical flavors, elegant plates, and a table made just for you.",
           galleryCopy: "A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.",
@@ -573,6 +577,8 @@ const renderStars = (rating = 5) =>
           contactKicker: "Booking",
           contactTitle: "Tell us about your private chef experience.",
           contactCopy: "Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.",
+          whatsappLabel: "Contact by WhatsApp",
+          instagramLabel: "Contact on Instagram",
           areas: "Serving villas, homes, and private venues across Costa Rica.",
           location: "Location: Costa Rica",
           bookingFormTitle: "Request a date",
@@ -595,16 +601,16 @@ const renderStars = (rating = 5) =>
           navContact: "Contacto",
           bookCta: "Reservar",
           heroKicker: "Experiencias culinarias privadas en Costa Rica",
-          heroTitle: "Chef privado para villas, retiros y celebraciones íntimas.",
-          heroCopy: "Ingredientes locales frescos, menús personalizados y servicio cuidado para comidas memorables en Costa Rica.",
-          heroPrimary: "Solicitar disponibilidad",
+          heroTitle: "Una cena creada especialmente para usted.",
+          heroCopy: "Usted lo imagina y nosotros lo creamos. Junto con el chef José Núñez, crearemos una experiencia gastronómica especial para usted y sus visitas en la comodidad de su villa, casa o alojamiento.",
+          heroPrimary: "Crear experiencia",
           heroSecondary: "Leer reseñas",
           servicesKicker: "Servicios",
           servicesTitle: "Diseñado para la forma en que quieres reunir a tus invitados.",
           servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea según tu ubicación, horario, gustos e invitados.",
           chefKicker: "Sobre el chef",
-          chefTitle: "Hola, me llamo Jose Luis, un costarricense amante de la cocina.",
-          chefCopy: "La cocina es mi pasión. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan cálidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
+          chefTitle: "Detrás de cada gran cena, hay una historia que merece ser disfrutada.",
+          chefCopy: "Soy José Núñez, chef privado y apasionado por crear experiencias culinarias personalizadas. Mi cocina combina ingredientes cuidadosamente seleccionados, creatividad y atención a los pequeños detalles para transformar cada ocasión en una experiencia memorable. No trabajo con experiencias idénticas para todos. Cada cena comienza con una conversación: qué quiere disfrutar, qué sabores le gustan y qué ocasión desea celebrar. A partir de ahí, creo una experiencia pensada especialmente para usted y sus invitados.",
           galleryKicker: "Galería",
           galleryTitle: "Sabores tropicales, platos elegantes y una mesa hecha para ti.",
           galleryCopy: "Una muestra visual de cenas privadas, platos servidos, ingredientes frescos y hospitalidad relajada en Costa Rica.",
@@ -615,6 +621,8 @@ const renderStars = (rating = 5) =>
           contactKicker: "Reservas",
           contactTitle: "Cuéntanos sobre tu experiencia de chef privado.",
           contactCopy: "Envía fecha, ubicación, número de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
+          whatsappLabel: "Contacto por WhatsApp",
+          instagramLabel: "Contacto por Instagram",
           areas: "Servicio para villas, casas y espacios privados en Costa Rica.",
           location: "Ubicación: Costa Rica",
           bookingFormTitle: "Solicitar fecha",
@@ -738,7 +746,36 @@ const renderStars = (rating = 5) =>
         return lines.join("\n");
       }
 
+      async function sendBookingEmail(form, lang, message) {
+        if (!supabaseUrl || !supabaseAnonKey) {
+          throw new Error("Supabase email function is not configured.");
+        }
+
+        const response = await fetch(`${supabaseUrl}/functions/v1/send-booking-email`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: supabaseAnonKey,
+            Authorization: `Bearer ${supabaseAnonKey}`,
+          },
+          body: JSON.stringify({
+            name: getFormValue(form, "name"),
+            date: getFormValue(form, "date"),
+            guests: getFormValue(form, "guests"),
+            location: getFormValue(form, "location"),
+            details: getFormValue(form, "details"),
+            language: lang,
+            message,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("The booking email could not be sent.");
+        }
+      }
+
       const bookingDateInput = document.querySelector("[data-booking-date]");
+      const bookingSubmitStatus = document.querySelector("[data-booking-submit-status]");
 
       function getTodayDateValue() {
         const today = new Date();
@@ -781,6 +818,26 @@ const renderStars = (rating = 5) =>
 
         const activeLang = document.documentElement.lang === "es" ? "es" : "en";
         const message = bookingMessage(event.currentTarget, activeLang);
+
+        bookingSubmitStatus.textContent =
+          activeLang === "es"
+            ? "Abriendo WhatsApp y enviando copia por correo..."
+            : "Opening WhatsApp and sending an email copy...";
+
+        sendBookingEmail(event.currentTarget, activeLang, message)
+          .then(() => {
+            bookingSubmitStatus.textContent =
+              activeLang === "es"
+                ? "Solicitud enviada tambien por correo."
+                : "Request also sent by email.";
+          })
+          .catch(() => {
+            bookingSubmitStatus.textContent =
+              activeLang === "es"
+                ? "WhatsApp se abrio. El correo se activara cuando configuremos Resend en Supabase."
+                : "WhatsApp opened. Email will work once Resend is configured in Supabase.";
+          });
+
         window.open(`https://wa.me/50686584625?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
       });
 
@@ -1125,16 +1182,16 @@ const renderStars = (rating = 5) =>
             navContact: "Contact",
             bookCta: "Book",
             heroKicker: "Private culinary experiences in Costa Rica",
-            heroTitle: "Private chef service for villas, retreats, and intimate celebrations.",
-            heroCopy: "Fresh local ingredients, personalized menus, and polished service for memorable meals across Costa Rica.",
-            heroPrimary: "Request availability",
+            heroTitle: "A dinner created especially for you.",
+            heroCopy: "You imagine it, we create it. Together with Chef José Núñez, we craft a special gastronomic experience for you and your guests in the comfort of your villa, home, or stay.",
+            heroPrimary: "Create experience",
             heroSecondary: "Read guest reviews",
             servicesKicker: "Services",
             servicesTitle: "Built around the way you want to gather.",
             servicesCopy: "From private dinners and villa service to events and celebrations, each experience is planned around your location, schedule, tastes, and guests.",
             chefKicker: "About the chef",
-            chefTitle: "Hi, I am Jose Luis, a Costa Rican chef who loves creating memorable meals.",
-            chefCopy: "I am passionate about cooking, local ingredients, and the details that make a private dinner feel special. With years of experience and culinary knowledge, I create warm, polished experiences for villas, family gatherings, and private celebrations across Costa Rica.",
+            chefTitle: "Behind every great dinner, there is a story worth enjoying.",
+            chefCopy: "I am José Núñez, a private chef passionate about creating personalized culinary experiences. My cooking combines carefully selected ingredients, creativity, and attention to the small details that turn every occasion into a memorable experience. I do not work with identical experiences for everyone. Each dinner begins with a conversation: what you want to enjoy, what flavors you like, and what occasion you wish to celebrate. From there, I create an experience designed especially for you and your guests.",
             galleryKicker: "Gallery",
             galleryTitle: "Tropical flavors, elegant plates, and a table made just for you.",
             galleryCopy: "A visual taste of private dinners, plated courses, fresh ingredients, and relaxed Costa Rican hosting.",
@@ -1145,6 +1202,8 @@ const renderStars = (rating = 5) =>
             contactKicker: "Booking",
             contactTitle: "Tell us about your private chef experience.",
             contactCopy: "Send the date, location, guest count, and any food preferences. We will reply with availability and a tailored proposal.",
+            whatsappLabel: "Contact by WhatsApp",
+            instagramLabel: "Contact on Instagram",
             areas: "Serving villas, homes, and private venues across Costa Rica.",
             location: "Location: Costa Rica",
             bookingFormTitle: "Request a date",
@@ -1167,16 +1226,16 @@ const renderStars = (rating = 5) =>
             navContact: "Contacto",
             bookCta: "Reservar",
             heroKicker: "Experiencias culinarias privadas en Costa Rica",
-            heroTitle: "Chef privado para villas, retiros y celebraciones íntimas.",
-            heroCopy: "Ingredientes locales frescos, menús personalizados y servicio cuidado para comidas memorables en Costa Rica.",
-            heroPrimary: "Solicitar disponibilidad",
+            heroTitle: "Una cena creada especialmente para usted.",
+            heroCopy: "Usted lo imagina y nosotros lo creamos. Junto con el chef José Núñez, crearemos una experiencia gastronómica especial para usted y sus visitas en la comodidad de su villa, casa o alojamiento.",
+            heroPrimary: "Crear experiencia",
             heroSecondary: "Leer reseñas",
             servicesKicker: "Servicios",
             servicesTitle: "Diseñado para la forma en que quieres reunir a tus invitados.",
             servicesCopy: "Desde cenas privadas y servicio para villas hasta eventos y celebraciones, cada experiencia se planea según tu ubicación, horario, gustos e invitados.",
             chefKicker: "Sobre el chef",
-            chefTitle: "Hola, me llamo Jose Luis, un costarricense amante de la cocina.",
-            chefCopy: "La cocina es mi pasión. Me gusta trabajar con ingredientes locales, cuidar cada detalle y crear experiencias privadas que se sientan cálidas, elegantes y memorables. Cuento con amplia experiencia y conocimientos culinarios para atender villas, reuniones familiares y celebraciones privadas en Costa Rica.",
+            chefTitle: "Detrás de cada gran cena, hay una historia que merece ser disfrutada.",
+            chefCopy: "Soy José Núñez, chef privado y apasionado por crear experiencias culinarias personalizadas. Mi cocina combina ingredientes cuidadosamente seleccionados, creatividad y atención a los pequeños detalles para transformar cada ocasión en una experiencia memorable. No trabajo con experiencias idénticas para todos. Cada cena comienza con una conversación: qué quiere disfrutar, qué sabores le gustan y qué ocasión desea celebrar. A partir de ahí, creo una experiencia pensada especialmente para usted y sus invitados.",
             galleryKicker: "Galería",
             galleryTitle: "Sabores tropicales, platos elegantes y una mesa hecha para ti.",
             galleryCopy: "Una muestra visual de cenas privadas, platos servidos, ingredientes frescos y hospitalidad relajada en Costa Rica.",
@@ -1187,6 +1246,8 @@ const renderStars = (rating = 5) =>
             contactKicker: "Reservas",
             contactTitle: "Cuéntanos sobre tu experiencia de chef privado.",
             contactCopy: "Envía fecha, ubicación, número de invitados y preferencias. Responderemos con disponibilidad y una propuesta personalizada.",
+            whatsappLabel: "Contacto por WhatsApp",
+            instagramLabel: "Contacto por Instagram",
             areas: "Servicio para villas, casas y espacios privados en Costa Rica.",
             location: "Ubicación: Costa Rica",
             bookingFormTitle: "Solicitar fecha",
